@@ -22,6 +22,7 @@
             <div class="col-sm-4">
                 <p align="center">
                     FORMATO UNICO
+                    hola
                 </p>
                 <h1 align="center">
                     HOJA DE VIDA
