@@ -43,9 +43,9 @@
             <div class="col-sm-1">
             </div>
             <div class="bannermenu">
-                <a href="Formacion_Academica.html" class="menu">Formacion Academica</a>
-                <a href="Experiencia_Laboral.html" class="menu">Experiencia Laboral</a>
-                <a href="Tiempo_Total_De_Experiencia.html" class="menu">Tiempo Total De Experiencia</a>
+                <a href="Formacion_Academica.php" class="menu">Formacion Academica</a>
+                <a href="Experiencia_Laboral.php" class="menu">Experiencia Laboral</a>
+                <a href="Tiempo_Total_De_Experiencia.php" class="menu">Tiempo Total De Experiencia</a>
             </div>
         </div>
         <div class="row">

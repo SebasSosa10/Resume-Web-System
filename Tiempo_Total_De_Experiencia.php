@@ -40,9 +40,9 @@
             <div class="col-sm-1">
             </div>
             <div class="bannermenu">
-                <a href="Formacion_Academica.html" class="menu">Formacion Academica</a>
-                <a href="Experiencia_Laboral.html" class="menu">Experiencia Laboral</a>
-                <a href="index.html" class="menu">Datos Personales</a>
+                <a href="Formacion_Academica.php" class="menu">Formacion Academica</a>
+                <a href="Experiencia_Laboral.php" class="menu">Experiencia Laboral</a>
+                <a href="index.php" class="menu">Datos Personales</a>
             </div>
         </div>
         <div class="row">
