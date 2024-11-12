@@ -4,11 +4,12 @@ $pass = "12345";
 $host = "localhost";
 $db = "proyectofinal";
 
-$con = new mysqli($host, $user, $pass, $db);
+// Cambiar $con a $conn para consistencia
+$conn = new mysqli($host, $user, $pass, $db);
 
-if ($con->connect_error) {
-    die("Error de conexión: " . $con->connect_error);
+if ($conn->connect_error) {
+    die("Error de conexión: " . $conn->connect_error);
 } else {
-    echo "Conexión exitosa a la base de datos";
+    echo "Conexión exitosa"; // Esto es solo para verificar, elimínalo después de la prueba
 }
 ?>

@@ -8,479 +8,156 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <link rel="stylesheet" href="CSS/Stile.css">
-    <script src="JavaScrpit/javaScript3.js" defer></script>
 </head>
 
 <body>
     <div class="container">
         <div class="row">
-            <div class="col-sm-1">
-            </div>
+            <div class="col-sm-1"></div>
             <div class="col-sm-3">
                 <img class="img-responsive" src="imagen/logo.jpeg" width="200">
             </div>
-            <div class="col-sm-4">
-                <p align="center">
-                    FORMATO UNICO
-                </p>
-                <h1 align="center">
-                    HOJA DE VIDA
-                </h1>
-                <p align="center">
-                    Persona Natural
-                </p>
-                <p align="center">
-                    (Leyes 190 de 1995, 489 y 443 de 1998)
-                </p>
+            <div class="col-sm-4 text-center">
+                <p>FORMATO ÚNICO</p>
+                <h1>HOJA DE VIDA</h1>
+                <p>Persona Natural</p>
+                <p>(Leyes 190 de 1995, 489 y 443 de 1998)</p>
             </div>
             <div class="col-sm-3">
-                <label for="comment">ENTIDAD RECEPTORA:</label>
-                <input type="text" class="form-control" id="entiti">
+                <label for="entidad">ENTIDAD RECEPTORA:</label>
+                <input type="text" class="form-control" id="entidad" name="entidad">
             </div>
         </div>
-        <div class="row">
-            <div class="col-sm-1">
-            </div>
-            <div class="bannermenu">
-                <a href="Formacion_Academica.php" class="menu">Formacion Academica</a>
-                <a href="index.php" class="menu">Datos Personales</a>
-                <a href="Tiempo_Total_De_Experiencia.php" class="menu">Tiempo Total De Experiencia</a>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-sm-1">
-            </div>
-            <div class="col-sm-5">
-                <h3>
-                    3. EXPERIENCIA LABORAL
-                </h3>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-sm-1">
-            </div>
-            <div class="col-sm-11">
-                <div class="text">
-                    <p>
-                        RELACIONE SU EXPERIENCIA LABORAL O DE PRESTACIÓN DE SERVICIOS EN ESTRICTO ORDEN CRONOLÓGICO
-                        COMENZANDO POR EL ACTUAL.
-                    </p>
-                </div>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-sm-1">
-            </div>
-            <div class="col-sm-11">
-                <div class="text">
-                    <h5>
-                        EMPLEO ACTUAL O CONTRATO VIGENTE
-                    </h5>
-                </div>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-sm-1">
-            </div>
-            <div class="col-sm-11">
-                <div class="form-group">
-                    <label for="usr">EMPRESA O ENTIDAD:</label>
-                    <input type="text" class="form-control" id="SegunApellido">
-                </div>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-sm-1">
-            </div>
-            <div class="col-sm-11">
-                <div class="form-radio">
-                    <div class="radio-numero">
-                        <label class="radio-inline"><input type="radio" name="optradio" checked>PÚBLICA</label>
-                        <label class="radio-inline"><input type="radio" name="optradio">PRIVADA</label>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-sm-1"></div>
-            <div class="col-sm-11">
-                <div class="for m-group">
-                    <label for="paisExperiencia" style="margin-right: 10px;">PAÍS:</label>
-                    <select id="paisExperiencia" class="form-control">
-                    <option disabled selected>Seleccione</option>
-                    </select>
-                </div>
-            </div>
-        <div class="row">
-            <div class="col-sm-1">
-            </div>
-            <div class="col-sm-11">
-                <div class="form-group">
-                    <label for="usr">DEPARTAMENTO:</label>
-                    <select class="form-control" id="PAIS">
-                        <option value="" disabled selected>Selecciona</option>
-                        <option value="1">Antioquia</option>
-                        <option value="2">Buenos Aires</option>
-                        <option value="3">Lima</option>
-                        <option value="4">Sao Paulo</option>
-                    </select>
-                </div>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-sm-1">
-            </div>
-            <div class="col-sm-11">
-                <div class="form-group">
-                    <label for="usr">CAPITAL:</label>
-                    <select class="form-control" id="PAIS">
-                        <option value="" disabled selected>Selecciona</option>
-                        <option value="1">Medellín</option>
-                        <option value="2">La Plata</option>
-                        <option value="3">Miraflores</option>
-                        <option value="4">Campinas</option>
-                    </select>
-                </div>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-sm-1">
-            </div>
-            <div class="col-sm-11">
-                <div class="form-group">
-                    <label for="usr">CORREO ELECTRÓNICO ENTIDAD:</label>
-                    <input type="text" class="form-control" id="SegunApellido">
-                </div>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-sm-1">
-            </div>
-            <div class="col-sm-11">
-                <div class="form-group">
-                    <label for="usr">TELÉFONOS:</label>
-                    <input type="text" class="form-control" id="SegunApellido">
-                </div>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-sm-1"></div>
-            <div class="col-sm-11">
-                <div class="formatodate">
-                <h6>FECHA DE INGRESO:</h6>
-                    <div class="date">
-                        <div class="col-xs-4">
-                            <label for="anio">AÑO:</label>
-                            <select id="anio" name="anio" class="form-control">
-                            <option value="" disabled selected>Seleccione</option>
-                            </select>
-                        </div>
-                        <div class="col-xs-3">
-                            <label for="mes">MES:</label>
-                            <select id="mes" name="mes" class="form-control">
-                                <option value="" disabled selected>Seleccione</option>
-                                <option value="1">Enero</option>
-                            <option value="2">Febrero</option>
-                            <option value="3">Marzo</option>
-                            <option value="4">Abril</option>
-                            <option value="5">Mayo</option>
-                            <option value="6">Junio</option>
-                            <option value="7">Julio</option>
-                            <option value="8">Agosto</option>
-                            <option value="9">Septiembre</option>
-                            <option value="10">Octubre</option>
-                            <option value="11">Noviembre</option>
-                            <option value="12">Diciembre</option>
-                            </select>
-                        </div>
-                        <div class="col-xs-2">
-                        <label for="dia">DIA:</label>
-                        <select id="dia" name="dia" class="form-control">
-                            <option value="" disabled selected>Seleccione</option>
-                        </select>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="row">
-    <div class="col-sm-1"></div>
-    <div class="col-sm-11">
-        <div class="formatodate">
-            <h6>FECHA DE RETIRO:</h6>
-            <div class="date">
-                <div class="form-group col-xs-4">
-                    <label for="anio2">AÑO:</label>
-                    <select id="anio2" name="anio2" class="form-control">
-                        <option value="" disabled selected>Seleccione</option>
-                    </select>
-                </div>
-                <div class="form-group col-xs-4">
-                    <label for="mes2">MES:</label>
-                    <select id="mes2" name="mes2" class="form-control">
-                        <option value="" disabled selected>Seleccione</option>
-                        <option value="1">Enero</option>
-                        <option value="2">Febrero</option>
-                        <option value="3">Marzo</option>
-                        <option value="4">Abril</option>
-                        <option value="5">Mayo</option>
-                        <option value="6">Junio</option>
-                        <option value="7">Julio</option>
-                        <option value="8">Agosto</option>
-                        <option value="9">Septiembre</option>
-                        <option value="10">Octubre</option>
-                        <option value="11">Noviembre</option>
-                        <option value="12">Diciembre</option>
-                    </select>
-                </div>
-                <div class="form-group col-xs-4">
-                    <label for="dia2">DIA:</label>
-                    <select id="dia2" name="dia2" class="form-control">
-                        <option value="" disabled selected>Seleccione</option>
-                    </select>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
 
         <div class="row">
-            <div class="col-sm-1">
-            </div>
-            <div class="col-sm-11">
-                <div class="form-group">
-                    <label for="usr">CARGO O CONTRATO ACTUAL:</label>
-                    <input type="text" class="form-control" id="SegunApellido">
-                </div>
-            </div>
-        </div>
-            <div class="row">
-                <div class="col-sm-1">
-                </div>
-                <div class="col-sm-11">
-                    <div class="form-group">
-                        <label for="usr"> DEPENDENCIA:</label>
-                        <input type="text" class="form-control" id="SegunApellido">
-                    </div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-sm-1">
-                </div>
-                <div class="col-sm-11">
-                    <div class="form-group">
-                        <label for="usr"> DIRECCIÓN:</label>
-                        <input type="text" class="form-control" id="SegunApellido">
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-sm-1">
-            </div>
-            <div class="col-sm-11">
-                <div class="text">
-                    <h5>
-                        EMPLEO O CONTRATO ANTERIOR
-                    </h5>
-                </div>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-sm-1">
-            </div>
-            <div class="col-sm-11">
-                <div class="form-group">
-                    <label for="usr">EMPRESA O ENTIDAD:</label>
-                    <input type="text" class="form-control" id="SegunApellido">
-                </div>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-sm-1">
-            </div>
-            <div class="col-sm-11">
-                <div class="form-radio">
-                    <div class="radio-numero">
-                        <label class="radio-inline"><input type="radio" name="optradio2" checked>PÚBLICA</label>
-                        <label class="radio-inline"><input type="radio" name="optradio2">PRIVADA</label>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="row">
             <div class="col-sm-1"></div>
-            <div class="col-sm-11">
-                <div class="for m-group">
-                    <label for="paisExperienciaFin" style="margin-right: 10px;">PAÍS:</label>
-                    <select id="paisExperienciaFin" class="form-control">
-                    <option disabled selected>Seleccione</option>
-                    </select>
-                </div>
-            </div>
-        <div class="row">
-            <div class="col-sm-1">
-            </div>
-            <div class="col-sm-11">
-                <div class="form-group">
-                    <label for="usr">DEPARTAMENTO:</label>
-                    <select class="form-control" id="PAIS">
-                        <option value="" disabled selected>Selecciona</option>
-                        <option value="1">Antioquia</option>
-                        <option value="2">Buenos Aires</option>
-                        <option value="3">Lima</option>
-                        <option value="4">Sao Paulo</option>
-                    </select>
-                </div>
+            <div class="bannermenu">
+                <a href="Formacion_Academica.php" class="menu">Formación Académica</a>
+                <a href="index.php" class="menu">Datos Personales</a>
+                <a href="Tiempo_Total_De_Experiencia.php" class="menu">Tiempo Total de Experiencia</a>
             </div>
         </div>
-        <div class="row">
-            <div class="col-sm-1">
-            </div>
-            <div class="col-sm-11">
-                <div class="form-group">
-                    <label for="usr">CAPITAL:</label>
-                    <select class="form-control" id="PAIS">
-                        <option value="" disabled selected>Selecciona</option>
-                        <option value="1">Medellín</option>
-                        <option value="2">La Plata</option>
-                        <option value="3">Miraflores</option>
-                        <option value="4">Campinas</option>
-                    </select>
+
+        <form method="post" action="Experiencia_Laboral.php">
+            <div class="row mt-4">
+                <div class="col-sm-1"></div>
+                <div class="col-sm-11">
+                    <h3>3. EXPERIENCIA LABORAL</h3>
+                    <p>RELACIONE SU EXPERIENCIA LABORAL O DE PRESTACIÓN DE SERVICIOS EN ESTRICTO ORDEN CRONOLÓGICO COMENZANDO POR EL ACTUAL.</p>
                 </div>
             </div>
-        </div>
-        <div class="row">
-            <div class="col-sm-1">
-            </div>
-            <div class="col-sm-11">
-                <div class="form-group">
-                    <label for="usr">CORREO ELECTRÓNICO ENTIDAD:</label>
-                    <input type="text" class="form-control" id="SegunApellido">
-                </div>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-sm-1">
-            </div>
-            <div class="col-sm-11">
-                <div class="form-group">
-                    <label for="usr">TELÉFONOS:</label>
-                    <input type="text" class="form-control" id="SegunApellido">
-                </div>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-sm-1"></div>
-            <div class="col-sm-11">
-                <div class="formatodate">
-                <h6>FECHA DE INGRESO:</h6>
-                    <div class="date">
-                        <div class="col-xs-4">
-                            <label for="anio3">AÑO:</label>
-                            <select id="anio3" name="anio3" class="form-control">
-                            <option value="" disabled selected>Seleccione</option>
-                            </select>
-                        </div>
-                        <div class="col-xs-3">
-                            <label for="mes3">MES:</label>
-                            <select id="mes3" name="mes3" class="form-control">
-                                <option value="" disabled selected>Seleccione</option>
-                                <option value="1">Enero</option>
-                            <option value="2">Febrero</option>
-                            <option value="3">Marzo</option>
-                            <option value="4">Abril</option>
-                            <option value="5">Mayo</option>
-                            <option value="6">Junio</option>
-                            <option value="7">Julio</option>
-                            <option value="8">Agosto</option>
-                            <option value="9">Septiembre</option>
-                            <option value="10">Octubre</option>
-                            <option value="11">Noviembre</option>
-                            <option value="12">Diciembre</option>
-                            </select>
-                        </div>
-                        <div class="col-xs-2">
-                        <label for="dia3">DIA:</label>
-                        <select id="dia3" name="dia" class="form-control">
-                            <option value="" disabled selected>Seleccione</option>
+
+            <!-- Empleo Actual -->
+            <div class="row">
+                <div class="col-sm-1"></div>
+                <div class="col-sm-11">
+                    <h5>EMPLEO ACTUAL O CONTRATO VIGENTE</h5>
+                    <div class="form-group">
+                        <label for="empresaActual">EMPRESA O ENTIDAD:</label>
+                        <input type="text" class="form-control" id="empresaActual" name="empresaActual">
+                    </div>
+                    <label>TIPO DE EMPRESA:</label>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" name="tipoEmpresaActual" id="publica" value="publica" checked>
+                        <label class="form-check-label" for="publica">PÚBLICA</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" name="tipoEmpresaActual" id="privada" value="privada">
+                        <label class="form-check-label" for="privada">PRIVADA</label>
+                    </div>
+                    <div class="form-group mt-3">
+                        <label for="paisActual">PAÍS:</label>
+                        <select id="paisActual" class="form-control" name="paisActual">
+                            <option disabled selected>Seleccione</option>
+                            <option value="colombia">Colombia</option>
+                            <option value="mexico">México</option>
+                            <option value="argentina">Argentina</option>
                         </select>
-                        </div>
                     </div>
-                </div>
-            </div>
-        </div>
-            <div class="row">
-            <div class="col-sm-1"></div>
-            <div class="col-sm-11">
-                <div class="formatodate">
-                <h6>FECHA DE RETIRO:</h6>
-                    <div class="date">
-                        <div class="col-xs-4">
-                            <label for="anio4">AÑO:</label>
-                            <select id="anio4" name="anio4" class="form-control">
-                            <option value="" disabled selected>Seleccione</option>
-                            </select>
-                        </div>
-                        <div class="col-xs-3">
-                            <label for="mes4">MES:</label>
-                            <select id="mes4" name="mes4" class="form-control">
-                                <option value="" disabled selected>Seleccione</option>
-                                <option value="1">Enero</option>
-                            <option value="2">Febrero</option>
-                            <option value="3">Marzo</option>
-                            <option value="4">Abril</option>
-                            <option value="5">Mayo</option>
-                            <option value="6">Junio</option>
-                            <option value="7">Julio</option>
-                            <option value="8">Agosto</option>
-                            <option value="9">Septiembre</option>
-                            <option value="10">Octubre</option>
-                            <option value="11">Noviembre</option>
-                            <option value="12">Diciembre</option>
-                            </select>
-                        </div>
-                        <div class="col-xs-2">
-                        <label for="dia4">DIA:</label>
-                        <select id="dia4" name="dia4" class="form-control">
-                            <option value="" disabled selected>Seleccione</option>
+                    <div class="form-group mt-3">
+                        <label for="departamentoActual">DEPARTAMENTO:</label>
+                        <select class="form-control" id="departamentoActual" name="departamentoActual">
+                            <option value="" disabled selected>Selecciona</option>
+                            <option value="antioquia">Antioquia</option>
+                            <option value="cundinamarca">Cundinamarca</option>
+                            <option value="valle-del-cauca">Valle del Cauca</option>
                         </select>
-                        </div>
+                    </div>
+                    <div class="form-group mt-3">
+                        <label for="capitalActual">CAPITAL:</label>
+                        <select class="form-control" id="capitalActual" name="capitalActual">
+                            <option value="" disabled selected>Selecciona</option>
+                            <option value="bogota">Bogotá</option>
+                            <option value="medellin">Medellín</option>
+                            <option value="cali">Cali</option>
+                        </select>
+                    </div>
+                    <div class="form-group mt-3">
+                        <label for="correoEntidadActual">CORREO ELECTRÓNICO ENTIDAD:</label>
+                        <input type="email" class="form-control" id="correoEntidadActual" name="correoEntidadActual">
+                    </div>
+                    <div class="form-group mt-3">
+                        <label for="telefonoEntidadActual">TELÉFONOS:</label>
+                        <input type="tel" class="form-control" id="telefonoEntidadActual" name="telefonoEntidadActual">
+                    </div>
+                    <div class="form-group mt-3">
+                        <label for="fechaIngresoActual">FECHA DE INGRESO:</label>
+                        <input type="date" id="fechaIngresoActual" name="fechaIngresoActual" class="form-control">
+                    </div>
+                    <div class="form-group mt-3">
+                        <label for="fechaIngresoActual">FECHA DE RETIRO:</label>
+                        <input type="date" id="fechaRetiro" name="fechaRetiroX" class="form-control">
+                    </div>
+                    <div class="form-group mt-3">
+                        <label for="cargo">CARGO O CONTRATO ACTUAL:</label>
+                        <input type="text" class="form-control" id="cargo" name="cargo">
+                    </div>
+                    <div class="form-group mt-3">
+                        <label for="dependenciaActual">DEPENDENCIA:</label>
+                        <input type="text" class="form-control" id="dependenciaActual" name="dependenciaActual">
+                    </div>
+                    <div class="form-group mt-3">
+                        <label for="direccionActual">DIRECCIÓN:</label>
+                        <input type="text" class="form-control" id="direccionActual" name="direccionActual">
                     </div>
                 </div>
             </div>
-        </div>
-            <div class="row">
-                <div class="col-sm-1">
-                </div>
-                <div class="col-sm-11">
-                    <div class="form-group">
-                        <label for="usr">CARGO O CONTRATO ACTUAL:</label>
-                        <input type="text" class="form-control" id="SegunApellido">
-                    </div>
+
+            <div class="row mt-4">
+                <div class="col-sm-12 text-center">
+                    <button type="submit" class="btn btn-primary">Enviar</button>
                 </div>
             </div>
-            <div class="row">
-                <div class="col-sm-1">
-                </div>
-                <div class="col-sm-11">
-                    <div class="form-group">
-                        <label for="usr"> DEPENDENCIA:</label>
-                        <input type="text" class="form-control" id="SegunApellido">
-                    </div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-sm-1">
-                </div>
-                <div class="col-sm-11">
-                    <div class="form-group">
-                        <label for="usr"> DIRECCIÓN:</label>
-                        <input type="text" class="form-control" id="SegunApellido">
-                    </div>
-                </div>
-            </div>
-        </div>
+        </form>
+        <?php
+        include('conexion.php');
+
+        if ($_SERVER["REQUEST_METHOD"] == "POST") {
+            $empresa = $conn->real_escape_string($_POST['empresaActual']);
+            $tipo = $conn->real_escape_string($_POST['tipoEmpresaActual']);
+            $pais = $conn->real_escape_string($_POST['paisActual']);
+            $departamento = $conn->real_escape_string($_POST['departamentoActual']);
+            $ciudad = $conn->real_escape_string($_POST['capitalActual']);
+            $correo = $conn->real_escape_string($_POST['correoEntidadActual']);
+            $telefono = $conn->real_escape_string($_POST['telefonoEntidadActual']);
+            $cargo = $conn->real_escape_string($_POST['cargo']);
+            $dependencia = $conn->real_escape_string($_POST['dependenciaActual']);
+            $direccion = $conn->real_escape_string($_POST['direccionActual']);
+            $fechaIngreso = $conn->real_escape_string($_POST['fechaIngresoActual']);
+            $fechaRetiro = $conn->real_escape_string($_POST['fechaRetiro']); // Nuevo campo
+
+            $sql = "INSERT INTO experiencia_laboral (empresa, tipo, pais, departamento, ciudad, correo, telefono, cargo, dependencia, direccion, fechaIngreso, fechaRetiro)
+            VALUES ('$empresa', '$tipo', '$pais', '$departamento', '$ciudad', '$correo', '$telefono', '$cargo', '$dependencia', '$direccion', '$fechaIngreso', '$fechaRetiro')";
+
+            if ($conn->query($sql) === TRUE) {
+                echo "<div class='alert alert-success'>Datos guardados exitosamente.</div>";
+            } else {
+                echo "<div class='alert alert-danger'>Error al guardar los datos: " . $conn->error . "</div>";
+            }
+        }
+
+        $conn->close();
+        ?>
     </div>
 </body>
 
