@@ -28,7 +28,6 @@
                 <input type="text" class="form-control" id="entidad" name="entidad">
             </div>
         </div>
-
         <div class="row">
             <div class="col-sm-1"></div>
             <div class="bannermenu">
@@ -37,7 +36,6 @@
                 <a href="Tiempo_Total_De_Experiencia.php" class="menu">Tiempo Total de Experiencia</a>
             </div>
         </div>
-
         <form method="post" action="Experiencia_Laboral.php">
             <div class="row mt-4">
                 <div class="col-sm-1"></div>
@@ -46,8 +44,6 @@
                     <p>RELACIONE SU EXPERIENCIA LABORAL O DE PRESTACIÓN DE SERVICIOS EN ESTRICTO ORDEN CRONOLÓGICO COMENZANDO POR EL ACTUAL.</p>
                 </div>
             </div>
-
-            <!-- Empleo Actual -->
             <div class="row">
                 <div class="col-sm-1"></div>
                 <div class="col-sm-11">
@@ -122,16 +118,14 @@
                     </div>
                 </div>
             </div>
-
             <div class="row mt-4">
                 <div class="col-sm-12 text-center">
-                    <button type="submit" class="btn btn-primary">Enviar</button>
+                    <button type="submit" class="btn btn-primary">Siguiente</button>
                 </div>
             </div>
         </form>
         <?php
         include('conexion.php');
-
         if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $empresa = $conn->real_escape_string($_POST['empresaActual']);
             $tipo = $conn->real_escape_string($_POST['tipoEmpresaActual']);
@@ -144,7 +138,7 @@
             $dependencia = $conn->real_escape_string($_POST['dependenciaActual']);
             $direccion = $conn->real_escape_string($_POST['direccionActual']);
             $fechaIngreso = $conn->real_escape_string($_POST['fechaIngresoActual']);
-            $fechaRetiro = $conn->real_escape_string($_POST['fechaRetiro']); // Nuevo campo
+            $fechaRetiro = $conn->real_escape_string($_POST['fechaRetiro']);
 
             $sql = "INSERT INTO experiencia_laboral (empresa, tipo, pais, departamento, ciudad, correo, telefono, cargo, dependencia, direccion, fechaIngreso, fechaRetiro)
             VALUES ('$empresa', '$tipo', '$pais', '$departamento', '$ciudad', '$correo', '$telefono', '$cargo', '$dependencia', '$direccion', '$fechaIngreso', '$fechaRetiro')";
@@ -155,7 +149,6 @@
                 echo "<div class='alert alert-danger'>Error al guardar los datos: " . $conn->error . "</div>";
             }
         }
-
         $conn->close();
         ?>
     </div>
