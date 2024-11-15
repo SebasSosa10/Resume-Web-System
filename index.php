@@ -107,7 +107,7 @@
                         <div class="form-textnumero">
                             <label for="numeroDocumento" style="margin-right: 10px;">N°</label>
                             <input type="text" class="form-control" id="numeroDocumento" name="numeroDocumento"
-                                style="width: 300px;">
+                                style="width: 300px;"> // poner oninput="validarSoloNumeros(this)"
                         </div>
                     </div>
                 </div>
@@ -116,7 +116,7 @@
                 <div class="col-sm-1"></div>
                 <div class="col-sm-11">
                     <div class="form">
-                        <label for="sexo" style="margin-right: 10px;"><strong>SEXO:</strong></label>
+                        <label for="sexo" style="margin-right: 10px;"><strong>GENERO:</strong></label>
                         <input class="form-check-input" type="radio" name="sexo" id="m" value="m" checked>
                         <label class="form-check-label" for="m">MASCULINO</label>
                         <input class="form-check-input" type="radio" name="sexo" id="f" value="f">
@@ -165,7 +165,8 @@
                         <div class="form-textnumero">
                             <label for="numeroLibretaMilitar" style="margin-right: 10px;">N°</label>
                             <input type="text" class="form-control" id="numeroLibretaMilitar"
-                                name="numeroLibretaMilitar" style="width: 300px;">
+                                name="numeroLibretaMilitar" style="width: 300px;"> // poner
+                            oninput="validarSoloNumeros(this)"
                         </div>
                         <div class="form-textnumero"></div>
                         <label for="dm" style="margin-right: 10px;">D.M</label>
@@ -319,7 +320,8 @@
                 <div class="col-sm-11">
                     <div class="form-group">
                         <label for="telefono">TELÉFONO:</label>
-                        <input type="text" class="form-control" id="telefono" name="telefono">
+                        <input type="text" class="form-control" id="telefono" name="telefono"> // poner
+                        oninput="validarSoloNumeros(this)"
                     </div>
                 </div>
             </div>
@@ -339,6 +341,7 @@
                 </div>
             </div>
         </form>
+
         <?php
         include('conexion.php');
         if ($conn->connect_error) {
@@ -354,7 +357,7 @@
             $numeroDocumento = $conn->real_escape_string($_POST['numeroDocumento']);
             $sexo = $conn->real_escape_string($_POST['sexo']);
             $tipoNacionalidad = $conn->real_escape_string($_POST['tipoNacionalidad']);
-            $paisNacionalidad = isset($_POST['paisNacionalidad']) ? "'" . $conn->real_escape_string($_POST['paisNacionalidad']) . "'" : "NULL";
+            $paisNacionalidad = isset($_POST['paisNacionalidad']) ? $conn->real_escape_string($_POST['paisNacionalidad']) : 'Desconocido';
             $tipoLibretaMilitar = $conn->real_escape_string($_POST['tipoLibreta']);
             $numeroLibretaMilitar = $conn->real_escape_string($_POST['numeroLibretaMilitar']);
             $dm = $conn->real_escape_string($_POST['dm']);
@@ -368,35 +371,81 @@
             $telefono = $conn->real_escape_string($_POST['telefono']);
             $email = $conn->real_escape_string($_POST['email']);
 
+            // Validación de campos obligatorios
             if (empty($primerApellido) || empty($nombre) || empty($numeroDocumento) || empty($email)) {
-                echo "Por favor complete todos los campos obligatorios.";
+                echo "<script>alert('Por favor complete todos los campos obligatorios.');</script>";
                 exit;
             }
 
             $sql = "INSERT INTO persona
-        (entidad, primerApellido, segundoApellido, nombre, tipoDocumento, numeroDocumento, sexo, 
-        tipoNacionalidad, paisNacionalidad, tipoLibretaMilitar, numeroLibretaMilitar, dm, fechaNacimiento, 
-        paisNacimiento, departamentoNacimiento, municipioNacimiento, paisCorrespondencia, departamentoCorrespondencia, municipioCorrespondencia, telefono, email)
-        VALUES 
-        ('$entidad', '$primerApellido', '$segundoApellido', '$nombre', '$tipoDocumento', '$numeroDocumento', 
-        '$sexo', '$tipoNacionalidad', '$paisNacionalidad', '$tipoLibretaMilitar', '$numeroLibretaMilitar', 
-        '$dm', '$fechaNacimiento', '$paisNacimiento', '$departamentoNacimiento', '$municipioNacimiento', '$paisCorrespondencia', '$departamentoCorrespondencia', '$municipioCorrespondencia', 
-        '$telefono', '$email')";
+            (entidad, primerApellido, segundoApellido, nombre, tipoDocumento, numeroDocumento, sexo, 
+            tipoNacionalidad, paisNacionalidad, tipoLibretaMilitar, numeroLibretaMilitar, dm, fechaNacimiento, 
+            paisNacimiento, departamentoNacimiento, municipioNacimiento, paisCorrespondencia, departamentoCorrespondencia, 
+            municipioCorrespondencia, telefono, email)
+            VALUES 
+            ('$entidad', '$primerApellido', '$segundoApellido', '$nombre', '$tipoDocumento', '$numeroDocumento', 
+            '$sexo', '$tipoNacionalidad', '$paisNacionalidad', '$tipoLibretaMilitar', '$numeroLibretaMilitar', 
+            '$dm', '$fechaNacimiento', '$paisNacimiento', '$departamentoNacimiento', '$municipioNacimiento', 
+            '$paisCorrespondencia', '$departamentoCorrespondencia', '$municipioCorrespondencia', 
+            '$telefono', '$email')";
 
+            $check_sql = "SELECT numeroDocumento FROM persona WHERE entidad = '$entidad' AND numeroDocumento = '$numeroDocumento'";
+            $result = $conn->query($check_sql);
 
-            // Imprime la consulta
-            //echo "Consulta SQL: " . $sql . "<br>";
-
-            if ($conn->query($sql) === TRUE) {
-                //echo "Datos guardados exitosamente";
+            if ($result->num_rows > 0) {
+                echo "<script>
+                    alert('Ya existe un registro con esta entidad y número de documento.');
+                    </script>";
             } else {
-                //echo "Error al guardar los datos: " . $conn->error;
-            }
+                $sql = "INSERT INTO persona
+                (entidad, primerApellido, segundoApellido, nombre, tipoDocumento, numeroDocumento, sexo, 
+                tipoNacionalidad, paisNacionalidad, tipoLibretaMilitar, numeroLibretaMilitar, dm, fechaNacimiento, 
+                paisNacimiento, departamentoNacimiento, municipioNacimiento, paisCorrespondencia, departamentoCorrespondencia, 
+                municipioCorrespondencia, telefono, email)
+                VALUES 
+                ('$entidad', '$primerApellido', '$segundoApellido', '$nombre', '$tipoDocumento', '$numeroDocumento', 
+                '$sexo', '$tipoNacionalidad', '$paisNacionalidad', '$tipoLibretaMilitar', '$numeroLibretaMilitar', 
+                '$dm', '$fechaNacimiento', '$paisNacimiento', '$departamentoNacimiento', '$municipioNacimiento', 
+                '$paisCorrespondencia', '$departamentoCorrespondencia', '$municipioCorrespondencia', 
+                '$telefono', '$email')";
 
+                if ($conn->query($sql) === TRUE) {
+                    session_start();
+                    $_SESSION['persona_id'] = $conn->insert_id;
+                    echo "<script>
+                        window.location.href = 'Formacion_Academica.php';
+                        </script>";
+                } else {
+                    echo "<script>
+                        alert('Error al guardar los datos: " . $conn->error . "');
+                        </script>";
+                }
+            }
             $conn->close();
         }
         ?>
-
+        <script>
+            function validarSoloNumeros(inputElement) {
+                let valorActual = inputElement.value;
+                let valorNumerico = valorActual.replace(/[^0-9]/g, '');
+                if (valorActual !== valorNumerico) {
+                    alert("Por favor, ingrese solo números.");
+                }
+                inputElement.value = valorNumerico;
+            }
+            
+            if (window.history.replaceState) {
+                window.history.replaceState(null, null, window.location.href);
+            }
+            document.getElementById('datosPersonalesForm').addEventListener('submit', function (e) {
+                var entidad = document.getElementById('entidad').value;
+                var numeroDocumento = document.getElementById('numeroDocumento').value;
+                if (!entidad || !numeroDocumento) {
+                    e.preventDefault();
+                    alert('La entidad y el número de documento son campos obligatorios.');
+                }
+            });
+        </script>
     </div>
 </body>
 

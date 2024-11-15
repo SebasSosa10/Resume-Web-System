@@ -8,7 +8,7 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <link rel="stylesheet" href="CSS/Stile.css">
-    <script src="JavaScrpit/javaScript2.js" defer></script>
+    <!-- <script src="JavaScrpit/javaScript2.js" defer></script> -->
 </head>
 
 <body>
@@ -97,27 +97,27 @@
             <div class="col-sm-3 text-center">
                 <h6>PRIMARIA</h6>
                 <div>
-                    <label class="radio-inline"><input type="radio" name="primaria">1</label>
-                    <label class="radio-inline"><input type="radio" name="primaria">2</label>
-                    <label class="radio-inline"><input type="radio" name="primaria">3</label>
-                    <label class="radio-inline"><input type="radio" name="primaria">4</label>
-                    <label class="radio-inline"><input type="radio" name="primaria">5</label>
+                    <label class="radio-inline"><input type="radio" name="tipoEducacion">1</label>
+                    <label class="radio-inline"><input type="radio" name="tipoEducacion">2</label>
+                    <label class="radio-inline"><input type="radio" name="tipoEducacion">3</label>
+                    <label class="radio-inline"><input type="radio" name="tipoEducacion">4</label>
+                    <label class="radio-inline"><input type="radio" name="tipoEducacion">5</label>
                 </div>
             </div>
             <div class="col-sm-3 text-center">
                 <h6>SECUNDARIA</h6>
                 <div>
-                    <label class="radio-inline"><input type="radio" name="secundaria">6</label>
-                    <label class="radio-inline"><input type="radio" name="secundaria">7</label>
-                    <label class="radio-inline"><input type="radio" name="secundaria">8</label>
-                    <label class="radio-inline"><input type="radio" name="secundaria">9</label>
+                    <label class="radio-inline"><input type="radio" name="tipoEducacion">6</label>
+                    <label class="radio-inline"><input type="radio" name="tipoEducacion">7</label>
+                    <label class="radio-inline"><input type="radio" name="tipoEducacion">8</label>
+                    <label class="radio-inline"><input type="radio" name="tipoEducacion">9</label>
                 </div>
             </div>
             <div class="col-sm-3 text-center">
                 <h6>MEDIA</h6>
                 <div>
-                    <label class="radio-inline"><input type="radio" name="media">10</label>
-                    <label class="radio-inline"><input type="radio" name="media">11</label>
+                    <label class="radio-inline"><input type="radio" name="tipoEducacion" id="tipoEducacion">10</label>
+                    <label class="radio-inline"><input type="radio" name="tipoEducacion" id="tipoEducacion">11</label>
                 </div>
             </div>
         </div>
@@ -127,7 +127,7 @@
             <div class="col-sm-11">
                 <div class="form-group">
                     <label for="usr">TÍTULO OBTENIDO:</label>
-                    <input type="text" class="form-control" id="PrimerApellido">
+                    <input type="text" class="form-control" id="nombreTitulo" name="nombreTitulo">
                 </div>
             </div>
         </div>
@@ -318,27 +318,27 @@
                             <label for="ex2" style="margin-right: 5px; text-align: center;">LO HABLA:</label>
                             <select class="form-control" id="mes">
                                 <option value="" disabled selected>Selecciona</option>
-                                <option value="1">(R) REGULAR</option>
-                                <option value="2">(B) BIEN</option>
-                                <option value="3">(MB) MUY BIEN</option>
+                                <option value="1">R</option>
+                                <option value="2">B</option>
+                                <option value="3">MB</option>
                             </select>
                         </div>
                         <div class="col-xs-3">
                             <label for="ex2" style="margin-right: 5px; text-align: center;">LO LEE:</label>
                             <select class="form-control" id="mes">
                                 <option value="" disabled selected>Selecciona</option>
-                                <option value="1">(R) REGULAR</option>
-                                <option value="2">(B) BIEN</option>
-                                <option value="3">(MB) MUY BIEN</option>
+                                <option value="1">R</option>
+                                <option value="2">B</option>
+                                <option value="3">MB</option>
                             </select>
                         </div>
                         <div class="col-xs-2">
                             <label for="ex2" style="margin-right: 5px; text-align: center;"> LO ESCRIBE:</label>
                             <select class="form-control" id="mes">
                                 <option value="" disabled selected>Selecciona</option>
-                                <option value="1">(R) REGULAR</option>
-                                <option value="2">(B) BIEN</option>
-                                <option value="3">(MB) MUY BIEN</option>
+                                <option value="1">R</option>
+                                <option value="2">B</option>
+                                <option value="3">MB</option>
                             </select>
                         </div>
                     </div>
