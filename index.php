@@ -13,7 +13,7 @@
 
 <body>
     <div class="container">
-        <form method="post" action="Formacion_Academica.php">
+        <form method="post" action="index.php">
             <div class="row">
                 <div class="col-sm-1">
                 </div>
@@ -92,37 +92,23 @@
                 <div class="col-sm-1">
                 </div>
                 <div class="col-sm-11">
-                    <form>
-                        <div class="form-radio">
-                            <label for="tipoDocumento" style="margin-right: 10px;"><strong>DOCUMENTO DE
-                                    IDENTIFICACIÓN:</strong></label>
-                            <div class="radio-numero">
-                                <select class="form-control" id="tipoDocumento" name="tipoDocumento">
-                                    <option disabled selected>Seleccione</option>
-                                    <option value="CC">C.C</option>
-                                    <option value="CE">C.E</option>
-                                    <option value="PASS">Pass</option>
-                                </select>
-                            </div>
-                            <div class="form-textnumero">
-                                <label for="numeroDocumento" style="margin-right: 10px;">N°</label>
-                                <input type="text" class="form-control" id="numeroDocumento" name="numeroDocumento"
-                                    style="width: 300px;">
-                            </div>
+                    <div class="form-radio">
+                        <label for="tipoDocumento" style="margin-right: 10px;"><strong>DOCUMENTO DE
+                                IDENTIFICACIÓN:</strong></label>
+                        <div class="radio-numero">
+                            <input class="form-check-input" type="radio" name="tipoDocumento" id="c.c" value="c.c"
+                                checked>
+                            <label class="form-check-label" for="c.c">C.C</label>
+                            <input class="form-check-input" type="radio" name="tipoDocumento" id="c.e" value="c.e">
+                            <label class="form-check-label" for="c.e">C.E</label>
+                            <input class="form-check-input" type="radio" name="tipoDocumento" id="pass" value="pass">
+                            <label class="form-check-label" for="pass">PASS</label>
                         </div>
-                    </form>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-sm-1"></div>
-                <div class="col-sm-11">
-                    <div class="form">
-                        <label for="sexo" style="margin-right: 10px;"><strong>SEXO:</strong></label>
-                        <select class="form-control" id="sexo" name="sexo">
-                            <option disabled selected>Seleccione</option>
-                            <option value="F">F</option>
-                            <option value="M">M</option>
-                        </select>
+                        <div class="form-textnumero">
+                            <label for="numeroDocumento" style="margin-right: 10px;">N°</label>
+                            <input type="text" class="form-control" id="numeroDocumento" name="numeroDocumento"
+                                style="width: 300px;">
+                        </div>
                     </div>
                 </div>
             </div>
@@ -130,9 +116,32 @@
                 <div class="col-sm-1"></div>
                 <div class="col-sm-11">
                     <div class="form">
-                        <label for="paisNacionalidad" style="margin-right: 10px;"><strong>NACIONALIDAD:</strong></label>
+                        <label for="sexo" style="margin-right: 10px;"><strong>SEXO:</strong></label>
+                        <input class="form-check-input" type="radio" name="sexo" id="m" value="m" checked>
+                        <label class="form-check-label" for="m">MASCULINO</label>
+                        <input class="form-check-input" type="radio" name="sexo" id="f" value="f">
+                        <label class="form-check-label" for="f">FEMENINO</label>
+                        <input class="form-check-input" type="radio" name="sexo" id="binario" value="binario">
+                        <label class="form-check-label" for="binario">OTRO</label>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-1"></div>
+                <div class="col-sm-11">
+                    <div class="form">
+                        <label for="nacionalidad" style="margin-right: 10px;"><strong>NACIONALIDAD:</strong></label>
+                        <div class="radio">
+                            <input class="form-check-input" type="radio" name="tipoNacionalidad" id="col" value="col"
+                                checked>
+                            <label class="form-check-label" for="col">COL.</label>
+                            <input class="form-check-input" type="radio" name="tipoNacionalidad" id="extranjero"
+                                value="extranjero">
+                            <label class="form-check-label" for="extranjero">EXTRANJERO</label>
+                        </div>
                         <div class="form-textnumero">
-                            <select id="paisNacionalidad" class="form-control" name="paisNacionalidad">
+                            <label for="paisNacionalidad" style="margin-right: 10px;">PAÍS:</label>
+                            <select id="paisNacionalidad" class="form-control" disabled>
                                 <option disabled selected>Seleccione</option>
                             </select>
                         </div>
@@ -146,11 +155,12 @@
                     <div class="form">
                         <label for="tipoLibreta" style="margin-right: 10px;"><strong>LIBRETA MILITAR:</strong></label>
                         <div class="radio">
-                            <select class="form-control" id="tipoLibreta" name="tipoLibreta">
-                                <option disabled selected>Seleccione</option>
-                                <option value="primeraClase">PRIMERA CLASE</option>
-                                <option value="segundaClase">SEGUNDA CLASE</option>
-                            </select>
+                            <input class="form-check-input" type="radio" name="tipoLibreta" id="primeraClase"
+                                value="primeraClase" checked>
+                            <label class="form-check-label" for="primeraClase">PRIMERA CLASE</label>
+                            <input class="form-check-input" type="radio" name="tipoLibreta" id="segundaClase"
+                                value="segundaClase">
+                            <label class="form-check-label" for="segundaClase">SEGUNDA CLASE</label>
                         </div>
                         <div class="form-textnumero">
                             <label for="numeroLibretaMilitar" style="margin-right: 10px;">N°</label>
@@ -207,15 +217,15 @@
                         <label for="departamentoNacimiento" style="margin-right: 10px;">DEPARTAMENTO:</label>
                         <select class="form-control" id="departamentoNacimiento" name="departamentoNacimiento">
                             <option value="" disabled selected>Selecciona</option>
-                            <option value="1">Antioquia</option>
-                            <option value="2">Atlántico</option>
-                            <option value="3">Bolívar</option>
-                            <option value="4">Caldas</option>
-                            <option value="5">Cauca</option>
-                            <option value="6">Cesar</option>
-                            <option value="7">Córdoba</option>
-                            <option value="8">Huila</option>
-                            <option value="9">Tolima</option>
+                            <option value="antioquia">Antioquia</option>
+                            <option value="atlántico">Atlántico</option>
+                            <option value="bolívar">Bolívar</option>
+                            <option value="caldas">Caldas</option>
+                            <option value="cauca">Cauca</option>
+                            <option value="cesar">Cesar</option>
+                            <option value="córdoba">Córdoba</option>
+                            <option value="huila">Huila</option>
+                            <option value="tolima">Tolima</option>
                         </select>
                     </div>
                 </div>
@@ -227,16 +237,16 @@
                         <label for="municipioNacimiento" style="margin-right: 10px;">MUNICIPIO:</label>
                         <select class="form-control" id="municipioNacimiento" name="municipioNacimiento">
                             <option value="" disabled selected>Selecciona</option>
-                            <option value="1">Salento</option>
-                            <option value="2">Filandia</option>
-                            <option value="3">Quimbaya</option>
-                            <option value="1">Circasia</option>
-                            <option value="2">Montenegro</option>
-                            <option value="3">Buenavista</option>
-                            <option value="1">Cordoba</option>
-                            <option value="2">Pijao</option>
-                            <option value="3">Genova</option>
-                            <option value="1">La Tebaida</option>
+                            <option value="salento">Salento</option>
+                            <option value="filandia">Filandia</option>
+                            <option value="quimbaya">Quimbaya</option>
+                            <option value="circasia">Circasia</option>
+                            <option value="montenegro">Montenegro</option>
+                            <option value="buenavista">Buenavista</option>
+                            <option value="cordoba">Cordoba</option>
+                            <option value="pijao">Pijao</option>
+                            <option value="genova">Genova</option>
+                            <option value="tebaida">La Tebaida</option>
                         </select>
                     </div>
                 </div>
@@ -253,7 +263,7 @@
             <div class="row">
                 <div class="col-sm-1"></div>
                 <div class="col-sm-11">
-                    <div class="for m-group">
+                    <div class="form-group">
                         <label for="paisCorrespondencia" style="margin-right: 10px;">PAÍS:</label>
                         <select id="paisCorrespondencia" class="form-control" name="paisCorrespondencia">
                             <option disabled selected>Seleccione</option>
@@ -269,15 +279,15 @@
                         <select class="form-control" id="departamentoCorrespondencia"
                             name="departamentoCorrespondencia">
                             <option value="" disabled selected>Selecciona</option>
-                            <option value="1">Antioquia</option>
-                            <option value="2">Atlántico</option>
-                            <option value="3">Bolívar</option>
-                            <option value="4">Caldas</option>
-                            <option value="5">Cauca</option>
-                            <option value="6">Cesar</option>
-                            <option value="7">Córdoba</option>
-                            <option value="8">Huila</option>
-                            <option value="9">Tolima</option>
+                            <option value="antioquia">Antioquia</option>
+                            <option value="atlántico">Atlántico</option>
+                            <option value="bolívar">Bolívar</option>
+                            <option value="caldas">Caldas</option>
+                            <option value="cauca">Cauca</option>
+                            <option value="cesar">Cesar</option>
+                            <option value="córdoba">Córdoba</option>
+                            <option value="huila">Huila</option>
+                            <option value="tolima">Tolima</option>
                         </select>
                     </div>
                 </div>
@@ -289,16 +299,16 @@
                         <label for="municipioCorrespondencia" style="margin-right: 10px;">MUNICIPIO:</label>
                         <select class="form-control" id="municipioCorrespondencia" name="municipioCorrespondencia">
                             <option value="" disabled selected>Selecciona</option>
-                            <option value="1">Salento</option>
-                            <option value="2">Filandia</option>
-                            <option value="3">Quimbaya</option>
-                            <option value="1">Circasia</option>
-                            <option value="2">Montenegro</option>
-                            <option value="3">Buenavista</option>
-                            <option value="1">Cordoba</option>
-                            <option value="2">Pijao</option>
-                            <option value="3">Genova</option>
-                            <option value="1">La Tebaida</option>
+                            <option value="salento">Salento</option>
+                            <option value="filandia">Filandia</option>
+                            <option value="quimbaya">Quimbaya</option>
+                            <option value="circasia">Circasia</option>
+                            <option value="montenegro">Montenegro</option>
+                            <option value="buenavista">Buenavista</option>
+                            <option value="cordoba">Cordoba</option>
+                            <option value="pijao">Pijao</option>
+                            <option value="genova">Genova</option>
+                            <option value="tebaida">La Tebaida</option>
                         </select>
                     </div>
                 </div>
@@ -319,7 +329,7 @@
                 <div class="col-sm-11">
                     <div class="form-group">
                         <label for="email">EMAIL:</label>
-                        <input type="text" class="form-control" id="email" name="email">
+                        <input type="email" class="form-control" id="email" name="email">
                     </div>
                 </div>
             </div>
@@ -331,6 +341,10 @@
         </form>
         <?php
         include('conexion.php');
+        if ($conn->connect_error) {
+            die("Error de conexión: " . $conn->connect_error);
+        }
+
         if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $entidad = $conn->real_escape_string($_POST['entidad']);
             $primerApellido = $conn->real_escape_string($_POST['primerApellido']);
@@ -339,7 +353,8 @@
             $tipoDocumento = $conn->real_escape_string($_POST['tipoDocumento']);
             $numeroDocumento = $conn->real_escape_string($_POST['numeroDocumento']);
             $sexo = $conn->real_escape_string($_POST['sexo']);
-            $paisNacionalidad = $conn->real_escape_string($_POST['paisNacionalidad']);
+            $tipoNacionalidad = $conn->real_escape_string($_POST['tipoNacionalidad']);
+            $paisNacionalidad = isset($_POST['paisNacionalidad']) ? "'" . $conn->real_escape_string($_POST['paisNacionalidad']) . "'" : "NULL";
             $tipoLibretaMilitar = $conn->real_escape_string($_POST['tipoLibreta']);
             $numeroLibretaMilitar = $conn->real_escape_string($_POST['numeroLibretaMilitar']);
             $dm = $conn->real_escape_string($_POST['dm']);
@@ -347,32 +362,38 @@
             $paisNacimiento = $conn->real_escape_string($_POST['paisNacimiento']);
             $departamentoNacimiento = $conn->real_escape_string($_POST['departamentoNacimiento']);
             $municipioNacimiento = $conn->real_escape_string($_POST['municipioNacimiento']);
-            $paisCorrespondencia = $conn->real_escape_string($_POST['paisCorrespondencia']);
-            $departamentoCorrespondencia = $conn->real_escape_string($_POST['departamentoCorrespondencia']);
-            $municipioCorrespondencia = $conn->real_escape_string($_POST['municipioCorrespondencia']);
             $telefono = $conn->real_escape_string($_POST['telefono']);
             $email = $conn->real_escape_string($_POST['email']);
-            $sql = "INSERT INTO persona (
-        entidad, primerApellido, segundoApellido, nombre, tipoDocumento, 
-        numeroDocumento, sexo, paisNacionalidad, tipoLibretaMilitar, 
-        numeroLibretaMilitar, dm, fechaNacimiento, paisNacimiento, 
-        departamentoNacimiento, municipioNacimiento, paisCorrespondencia, 
-        departamentoCorrespondencia, municipioCorrespondencia, telefono, email
-    ) VALUES (
-        '$entidad', '$primerApellido', '$segundoApellido', '$nombre', '$tipoDocumento', 
-        '$numeroDocumento', '$sexo', '$paisNacionalidad', '$tipoLibretaMilitar', 
-        '$numeroLibretaMilitar', '$dm', '$fechaNacimiento', '$paisNacimiento', 
-        '$departamentoNacimiento', '$municipioNacimiento', '$paisCorrespondencia', 
-        '$departamentoCorrespondencia', '$municipioCorrespondencia', '$telefono', '$email'
-    )";
-            if ($conn->query($sql) === TRUE) {
-                echo "<div class='alert alert-success'>Datos guardados exitosamente.</div>";
-            } else {
-                echo "<div class='alert alert-danger'>Error al guardar los datos: " . $conn->error . "</div>";
+
+            if (empty($primerApellido) || empty($nombre) || empty($numeroDocumento) || empty($email)) {
+                echo "Por favor complete todos los campos obligatorios.";
+                exit;
             }
+
+            $sql = "INSERT INTO persona
+        (entidad, primerApellido, segundoApellido, nombre, tipoDocumento, numeroDocumento, sexo, 
+        tipoNacionalidad, paisNacionalidad, tipoLibretaMilitar, numeroLibretaMilitar, dm, fechaNacimiento, 
+        paisNacimiento, departamentoNacimiento, municipioNacimiento, telefono, email)
+        VALUES 
+        ('$entidad', '$primerApellido', '$segundoApellido', '$nombre', '$tipoDocumento', '$numeroDocumento', 
+        '$sexo', '$tipoNacionalidad', '$paisNacionalidad', '$tipoLibretaMilitar', '$numeroLibretaMilitar', 
+        '$dm', '$fechaNacimiento', '$paisNacimiento', '$departamentoNacimiento', '$municipioNacimiento', 
+        '$telefono', '$email')";
+
+
+            // Imprime la consulta
+            echo "Consulta SQL: " . $sql . "<br>";
+
+            if ($conn->query($sql) === TRUE) {
+                echo "Datos guardados exitosamente";
+            } else {
+                echo "Error al guardar los datos: " . $conn->error;
+            }
+
+            $conn->close();
         }
-        $conn->close();
         ?>
+
     </div>
 </body>
 

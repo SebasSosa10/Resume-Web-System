@@ -2,30 +2,29 @@ let paises = [];
 
 document.addEventListener("DOMContentLoaded", function () {
     cargaInicial();
-    const paisNacionalidad = document.getElementById("paisNacionalidad");
-    const paisNacimiento = document.getElementById("paisNacimiento");
-    const paisCorrespondencia = document.getElementById("paisCorrespondencia");
-    cargaInicial().then(() => {
-        cargarPaises(paisNacimiento);
-        cargarPaises(paisCorrespondencia);
-        cargarPaises(paisNacionalidad);
+    document.getElementById("col").addEventListener("change", function () {
+        if (this.checked) {
+            document.getElementById("paisNacionalidad").disabled = true;
+        }
+    });
+    document.getElementById("extranjero").addEventListener("change", function () {
+        if (this.checked) {
+            document.getElementById("paisNacionalidad").disabled = false;
+        }
     });
 });
-async function cargaInicial() {
+
+function cargaInicial() {
     const url = "https://restcountries.com/v3.1/all";
-    try {
-        const response = await fetch(url);
-        const data = await response.json();
-        obtenerPaises(data);
-    } catch (error) {
-        console.error("Error al obtener los países:", error);
-    }
+    fetch(url)
+        .then(response => response.json())
+        .then(data => obtenerPaises(data));
 }
+
 function obtenerPaises(data) {
     let index = 0;
     data.forEach(element => {
-        if (element.continents.includes("South America") &&
-            !["Suriname", "French Guiana", "Falkland Islands"].includes(element.name.common)) {
+        if (element.continents.includes("South America") && element.name.common !== "Suriname" && element.name.common !== "French Guiana" && element.name.common !== "Falkland Islands") {
             let pais = {
                 id: index,
                 name: element.name.common,
@@ -36,12 +35,16 @@ function obtenerPaises(data) {
             index += 1;
         }
     });
-}
-function cargarPaises(selectElement) {
-    selectElement.innerHTML = '<option disabled selected>Seleccione</option>';
+    let selectNacionalidad = document.getElementById("paisNacionalidad");
+    let selectNacimiento = document.getElementById("paisNacimiento");
+    let selectCorrespondencia = document.getElementById("paisCorrespondencia");
+
     paises.forEach(e => {
-        let option = new Option(e.name, e.name);
-        selectElement.appendChild(option);
+        let optionNacionalidad = new Option(e.name, e.name);
+        let optionNacimiento = new Option(e.name, e.name);
+        let optionCorrespondencia = new Option(e.name, e.name);
+        selectNacionalidad.appendChild(optionNacionalidad);
+        selectNacimiento.appendChild(optionNacimiento);
+        selectCorrespondencia.appendChild(optionCorrespondencia);
     });
 }
-
