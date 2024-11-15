@@ -362,6 +362,9 @@
             $paisNacimiento = $conn->real_escape_string($_POST['paisNacimiento']);
             $departamentoNacimiento = $conn->real_escape_string($_POST['departamentoNacimiento']);
             $municipioNacimiento = $conn->real_escape_string($_POST['municipioNacimiento']);
+            $paisCorrespondencia = $conn->real_escape_string($_POST['paisCorrespondencia']);
+            $departamentoCorrespondencia = $conn->real_escape_string($_POST['departamentoCorrespondencia']);
+            $municipioCorrespondencia = $conn->real_escape_string($_POST['municipioCorrespondencia']);
             $telefono = $conn->real_escape_string($_POST['telefono']);
             $email = $conn->real_escape_string($_POST['email']);
 
@@ -373,21 +376,21 @@
             $sql = "INSERT INTO persona
         (entidad, primerApellido, segundoApellido, nombre, tipoDocumento, numeroDocumento, sexo, 
         tipoNacionalidad, paisNacionalidad, tipoLibretaMilitar, numeroLibretaMilitar, dm, fechaNacimiento, 
-        paisNacimiento, departamentoNacimiento, municipioNacimiento, telefono, email)
+        paisNacimiento, departamentoNacimiento, municipioNacimiento, paisCorrespondencia, departamentoCorrespondencia, municipioCorrespondencia, telefono, email)
         VALUES 
         ('$entidad', '$primerApellido', '$segundoApellido', '$nombre', '$tipoDocumento', '$numeroDocumento', 
         '$sexo', '$tipoNacionalidad', '$paisNacionalidad', '$tipoLibretaMilitar', '$numeroLibretaMilitar', 
-        '$dm', '$fechaNacimiento', '$paisNacimiento', '$departamentoNacimiento', '$municipioNacimiento', 
+        '$dm', '$fechaNacimiento', '$paisNacimiento', '$departamentoNacimiento', '$municipioNacimiento', '$paisCorrespondencia', '$departamentoCorrespondencia', '$municipioCorrespondencia', 
         '$telefono', '$email')";
 
 
             // Imprime la consulta
-            echo "Consulta SQL: " . $sql . "<br>";
+            //echo "Consulta SQL: " . $sql . "<br>";
 
             if ($conn->query($sql) === TRUE) {
-                echo "Datos guardados exitosamente";
+                //echo "Datos guardados exitosamente";
             } else {
-                echo "Error al guardar los datos: " . $conn->error;
+                //echo "Error al guardar los datos: " . $conn->error;
             }
 
             $conn->close();
