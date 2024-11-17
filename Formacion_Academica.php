@@ -5,6 +5,7 @@ $entidad = $_GET['entidad'] ?? null;
 $numeroDocumento = $_GET['numeroDocumento'] ?? null;
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    // Capturar los datos del formulario
     $tipoEducacion = $_POST['tipoEducacion'] ?? '';
     $titulo = $_POST['nombreTitulo'] ?? '';
     $mesEducacionBasica = $_POST['mesTitulo'] ?? '';
@@ -21,6 +22,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $loLee = $_POST['loLee'] ?? '';
     $loEscribe = $_POST['loEscribe'] ?? '';
 
+    // Insertar datos en la tabla formacion_academica
     $sql = "INSERT INTO formacion_academica (
                 tipoEducacion, titulo, mesEducacionBasica, anioEducacionBasica, modalidad, numeroSemestre, 
                 graduado, nombreEstudio, mesEducacionSuperior, anioEducacionSuperior, tarjetaProfesional, 
@@ -47,6 +49,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $loEscribe,
             $numeroDocumento
         );
+
+        if (!$entidad || !$numeroDocumento) {
+            echo "<script>
+            alert('Debe llenar los Datos Personales primero.');
+            window.location.href = 'Experiencia_Laboral.php';
+            </script>";
+            exit();
+        }
 
         if ($stmt->execute()) {
             header("Location: Experiencia_Laboral.php?entidad=" . urlencode($entidad) . "&numeroDocumento=" . urlencode($numeroDocumento));
@@ -101,7 +111,8 @@ $conn->close();
             </div>
             <div class="col-sm-3">
                 <label for="comment">ENTIDAD RECEPTORA:</label>
-                <input type="text" class="form-control" id="entiti">
+                <input type="text" class="form-control" id="entiti" name="entidadReceptora" readonly
+                    value="<?php echo htmlspecialchars($entidad); ?>">
             </div>
         </div>
         <div class="row">
@@ -109,7 +120,6 @@ $conn->close();
             </div>
             <div class="bannermenu">
                 <a href="index.php" class="menu">Datos Personales</a>
-                <a href="Formacion_Academica.php" class="menu">Formacion Academica</a>
                 <a href="Experiencia_Laboral.php" class="menu">Experiencia Laboral</a>
                 <a href="Tiempo_Total_De_Experiencia.php" class="menu">Tiempo Total De Experiencia</a>
             </div>
@@ -166,20 +176,29 @@ $conn->close();
                 <div class="col-sm-3 text-center">
                     <h6>PRIMARIA</h6>
                     <div>
-                        <label class="radio-inline"><input type="radio" name="tipoEducacion">1</label>
-                        <label class="radio-inline"><input type="radio" name="tipoEducacion">2</label>
-                        <label class="radio-inline"><input type="radio" name="tipoEducacion">3</label>
-                        <label class="radio-inline"><input type="radio" name="tipoEducacion">4</label>
-                        <label class="radio-inline"><input type="radio" name="tipoEducacion">5</label>
+                        <label class="radio-inline"><input type="radio" name="tipoEducacion"
+                                id="tipoEducacion">1</label>
+                        <label class="radio-inline"><input type="radio" name="tipoEducacion"
+                                id="tipoEducacion">2</label>
+                        <label class="radio-inline"><input type="radio" name="tipoEducacion"
+                                id="tipoEducacion">3</label>
+                        <label class="radio-inline"><input type="radio" name="tipoEducacion"
+                                id="tipoEducacion">4</label>
+                        <label class="radio-inline"><input type="radio" name="tipoEducacion"
+                                id="tipoEducacion">5</label>
                     </div>
                 </div>
                 <div class="col-sm-3 text-center">
                     <h6>SECUNDARIA</h6>
                     <div>
-                        <label class="radio-inline"><input type="radio" name="tipoEducacion">6</label>
-                        <label class="radio-inline"><input type="radio" name="tipoEducacion">7</label>
-                        <label class="radio-inline"><input type="radio" name="tipoEducacion">8</label>
-                        <label class="radio-inline"><input type="radio" name="tipoEducacion">9</label>
+                        <label class="radio-inline"><input type="radio" name="tipoEducacion"
+                                id="tipoEducacion">6</label>
+                        <label class="radio-inline"><input type="radio" name="tipoEducacion id="
+                                tipoEducacion"">7</label>
+                        <label class="radio-inline"><input type="radio" name="tipoEducacion"
+                                id="tipoEducacion">8</label>
+                        <label class="radio-inline"><input type="radio" name="tipoEducacion"
+                                id="tipoEducacion">9</label>
                     </div>
                 </div>
                 <div class="col-sm-3 text-center">
@@ -278,11 +297,11 @@ $conn->close();
                                 <select class="form-control" id="modalidad" name="modalidad">
                                     <option value="" disabled selected>Selecciona</option>
                                     <option value="tecnica">TC</option>
-                                    <option value="tecnologico">TL</option>
-                                    <option value="tecnologico expecial">TE</option>
+                                    <option value="tecnologica">TL</option>
+                                    <option value="tecnologica especial">TE</option>
                                     <option value="universitario">UN</option>
                                     <option value="especializacion">ES</option>
-                                    <option value="maestria">MG</option>
+                                    <option value="magister">MG</option>
                                     <option value="doctorado">DOC</option>
                                 </select>
                             </div>
@@ -357,8 +376,7 @@ $conn->close();
                 <div class="col-sm-11">
                     <div class="form-group">
                         <label for="numeroTarjeta">No. DE TARJETA PROFESIONAL:</label>
-                        <input type="text" class="form-control" id="numeroTarjeta" name="numeroTarjeta"
-                            oninput="validarSoloNumeros(this)">
+                        <input type="text" class="form-control" id="numeroTarjeta" name="numeroTarjeta">
                     </div>
                 </div>
             </div>
@@ -432,11 +450,6 @@ $conn->close();
                 </div>
             </div>
         </form>
-        <script>
-            function validarSoloNumeros(input) {
-                input.value = input.value.replace(/[^0-9]/g, '');
-            }
-        </script>
     </div>
 </body>
 
