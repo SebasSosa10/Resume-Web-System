@@ -1,3 +1,57 @@
+<?php
+include('conexion.php');
+
+$entidad = $_GET['entidad'] ?? null;
+$numeroDocumento = $_GET['numeroDocumento'] ?? null;
+
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    $empresa = $conn->real_escape_string($_POST['empresaActual']);
+    $tipo = $conn->real_escape_string($_POST['tipoEmpresaActual']);
+    $pais = $conn->real_escape_string($_POST['paisActual']);
+    $departamento = $conn->real_escape_string($_POST['departamentoActual']);
+    $ciudad = $conn->real_escape_string($_POST['capitalActual']);
+    $correo = $conn->real_escape_string($_POST['correoEntidadActual']);
+    $telefono = $conn->real_escape_string($_POST['telefonoEntidadActual']);
+    $cargo = $conn->real_escape_string($_POST['cargo']);
+    $dependencia = $conn->real_escape_string($_POST['dependenciaActual']);
+    $direccion = $conn->real_escape_string($_POST['direccionActual']);
+    $fechaIngreso = $conn->real_escape_string($_POST['fechaIngresoActual']);
+    $fechaRetiro = $conn->real_escape_string($_POST['fechaRetiroActual']);
+
+    if (!$entidad || !$numeroDocumento) {
+        echo "<script>
+            alert('Debe llenar los Datos Personales primero.');
+            window.location.href = 'Experiencia_Laboral.php';
+        </script>";
+        exit();
+    }
+
+    // Preparar la consulta
+    $stmt = $conn->prepare("INSERT INTO experiencia_laboral (empresa, tipo, pais, departamento, ciudad, correo, telefono, cargo, dependencia, direccion, fechaIngreso, fechaRetiro, idPersona)
+                            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+
+    if (!$stmt) {
+        echo "<div class='alert alert-danger'>Error en la preparación de la consulta: " . $conn->error . "</div>";
+        exit();
+    }
+
+    // Vincular parámetros
+    $stmt->bind_param("ssssssssssssi", $empresa, $tipo, $pais, $departamento, $ciudad, $correo, $telefono, $cargo, $dependencia, $direccion, $fechaIngreso, $fechaRetiro, $numeroDocumento);
+
+    // Ejecutar la consulta
+    if ($stmt->execute()) {
+        header("Location: Tiempo_Total_De_Experiencia.php?entidad=" . urlencode($entidad) . "&numeroDocumento=" . urlencode($numeroDocumento));
+        exit();
+    } else {
+        echo "<div class='alert alert-danger'>Error al guardar los datos: " . $stmt->error . "</div>";
+    }
+
+    $stmt->close();
+}
+
+$conn->close();
+?>
+
 <!doctype html>
 <html lang="en">
 
@@ -24,8 +78,9 @@
                 <p>(Leyes 190 de 1995, 489 y 443 de 1998)</p>
             </div>
             <div class="col-sm-3">
-                <label for="entidad">ENTIDAD RECEPTORA:</label>
-                <input type="text" class="form-control" id="entidad" name="entidad">
+                <label for="comment">ENTIDAD RECEPTORA:</label>
+                <input type="text" class="form-control" id="entiti" name="entidadReceptora" readonly
+                    value="<?php echo htmlspecialchars($entidad); ?>">
             </div>
         </div>
         <div class="row">
@@ -37,7 +92,7 @@
                 <a href="Tiempo_Total_De_Experiencia.php" class="menu">Tiempo Total De Experiencia</a>
             </div>
         </div>
-        <form method="post" action="Experiencia_Laboral.php">
+        <form method="post" action="Experiencia_Laboral.php?entidad=<?php echo urlencode($entidad); ?>&numeroDocumento=<?php echo urlencode($numeroDocumento); ?>">
             <div class="row mt-4">
                 <div class="col-sm-1"></div>
                 <div class="col-sm-11">
@@ -105,8 +160,8 @@
                         <input type="date" id="fechaIngresoActual" name="fechaIngresoActual" class="form-control">
                     </div>
                     <div class="form-group mt-3">
-                        <label for="fechaIngresoActual">FECHA DE RETIRO:</label>
-                        <input type="date" id="fechaRetiro" name="fechaRetiroX" class="form-control">
+                        <label for="fechaRetiroActual">FECHA DE RETIRO:</label>
+                        <input type="date" id="fechaRetiroActual" name="fechaRetiroActual" class="form-control">
                     </div>
                     <div class="form-group mt-3">
                         <label for="cargo">CARGO O CONTRATO ACTUAL:</label>
@@ -122,39 +177,14 @@
                     </div>
                 </div>
             </div>
+            <input type="hidden" name="entidad" value="<?php echo htmlspecialchars($entidad); ?>">
+            <input type="hidden" name="numeroDocumento" value="<?php echo htmlspecialchars($numeroDocumento); ?>">
             <div class="row mt-4">
                 <div class="col-sm-12 text-center">
                     <button type="submit" class="btn btn-primary">Siguiente</button>
                 </div>
             </div>
         </form>
-        <?php
-        include('conexion.php');
-        if ($_SERVER["REQUEST_METHOD"] == "POST") {
-            $empresa = $conn->real_escape_string($_POST['empresaActual']);
-            $tipo = $conn->real_escape_string($_POST['tipoEmpresaActual']);
-            $pais = $conn->real_escape_string($_POST['paisActual']);
-            $departamento = $conn->real_escape_string($_POST['departamentoActual']);
-            $ciudad = $conn->real_escape_string($_POST['capitalActual']);
-            $correo = $conn->real_escape_string($_POST['correoEntidadActual']);
-            $telefono = $conn->real_escape_string($_POST['telefonoEntidadActual']);
-            $cargo = $conn->real_escape_string($_POST['cargo']);
-            $dependencia = $conn->real_escape_string($_POST['dependenciaActual']);
-            $direccion = $conn->real_escape_string($_POST['direccionActual']);
-            $fechaIngreso = $conn->real_escape_string($_POST['fechaIngresoActual']);
-            $fechaRetiro = $conn->real_escape_string($_POST['fechaRetiro']);
-
-            $sql = "INSERT INTO experiencia_laboral (empresa, tipo, pais, departamento, ciudad, correo, telefono, cargo, dependencia, direccion, fechaIngreso, fechaRetiro)
-            VALUES ('$empresa', '$tipo', '$pais', '$departamento', '$ciudad', '$correo', '$telefono', '$cargo', '$dependencia', '$direccion', '$fechaIngreso', '$fechaRetiro')";
-
-            if ($conn->query($sql) === TRUE) {
-                echo "<div class='alert alert-success'>Datos guardados exitosamente.</div>";
-            } else {
-                echo "<div class='alert alert-danger'>Error al guardar los datos: " . $conn->error . "</div>";
-            }
-        }
-        $conn->close();
-        ?>
     </div>
 </body>
 

@@ -48,6 +48,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $numeroDocumento
         );
 
+        if (!$entidad || !$numeroDocumento) {
+            echo "<script>
+            alert('Debe llenar los Datos Personales primero.');
+            window.location.href = 'Formacion_Acadeica.php';
+            </script>";
+            exit();
+        }
+
         if ($stmt->execute()) {
             header("Location: Experiencia_Laboral.php?entidad=" . urlencode($entidad) . "&numeroDocumento=" . urlencode($numeroDocumento));
             exit();
@@ -101,7 +109,8 @@ $conn->close();
             </div>
             <div class="col-sm-3">
                 <label for="comment">ENTIDAD RECEPTORA:</label>
-                <input type="text" class="form-control" id="entiti">
+                <input type="text" class="form-control" id="entiti" name="entidadReceptora" readonly
+                    value="<?php echo htmlspecialchars($entidad); ?>">
             </div>
         </div>
         <div class="row">
@@ -166,20 +175,20 @@ $conn->close();
                 <div class="col-sm-3 text-center">
                     <h6>PRIMARIA</h6>
                     <div>
-                        <label class="radio-inline"><input type="radio" name="tipoEducacion">1</label>
-                        <label class="radio-inline"><input type="radio" name="tipoEducacion">2</label>
-                        <label class="radio-inline"><input type="radio" name="tipoEducacion">3</label>
-                        <label class="radio-inline"><input type="radio" name="tipoEducacion">4</label>
-                        <label class="radio-inline"><input type="radio" name="tipoEducacion">5</label>
+                        <label class="radio-inline"><input type="radio" name="tipoEducacion" id="tipoEducacion">1</label>
+                        <label class="radio-inline"><input type="radio" name="tipoEducacion" id="tipoEducacion">2</label>
+                        <label class="radio-inline"><input type="radio" name="tipoEducacion" id="tipoEducacion">3</label>
+                        <label class="radio-inline"><input type="radio" name="tipoEducacion" id="tipoEducacion">4</label>
+                        <label class="radio-inline"><input type="radio" name="tipoEducacion" id="tipoEducacion">5</label>
                     </div>
                 </div>
                 <div class="col-sm-3 text-center">
                     <h6>SECUNDARIA</h6>
                     <div>
-                        <label class="radio-inline"><input type="radio" name="tipoEducacion">6</label>
-                        <label class="radio-inline"><input type="radio" name="tipoEducacion">7</label>
-                        <label class="radio-inline"><input type="radio" name="tipoEducacion">8</label>
-                        <label class="radio-inline"><input type="radio" name="tipoEducacion">9</label>
+                        <label class="radio-inline"><input type="radio" name="tipoEducacion" id="tipoEducacion">6</label>
+                        <label class="radio-inline"><input type="radio" name="tipoEducacion" id="tipoEducacion">7</label>
+                        <label class="radio-inline"><input type="radio" name="tipoEducacion" id="tipoEducacion">8</label>
+                        <label class="radio-inline"><input type="radio" name="tipoEducacion" id="tipoEducacion">9</label>
                     </div>
                 </div>
                 <div class="col-sm-3 text-center">
@@ -208,18 +217,18 @@ $conn->close();
                     <label for="mesTitulo">MES:</label>
                     <select class="form-control" id="mesTitulo" name="mesTitulo">
                         <option value="" disabled selected>Selecciona</option>
-                        <option value="1">Enero</option>
-                        <option value="2">Febrero</option>
-                        <option value="3">Marzo</option>
-                        <option value="4">Abril</option>
-                        <option value="5">Mayo</option>
-                        <option value="6">Junio</option>
-                        <option value="7">Julio</option>
-                        <option value="8">Agosto</option>
-                        <option value="9">Septiembre</option>
-                        <option value="10">Octubre</option>
-                        <option value="11">Noviembre</option>
-                        <option value="12">Diciembre</option>
+                        <option value="Enero">Enero</option>
+                        <option value="Febrero">Febrero</option>
+                        <option value="Marzo">Marzo</option>
+                        <option value="Abril">Abril</option>
+                        <option value="Mayo">Mayo</option>
+                        <option value="Junio">Junio</option>
+                        <option value="Julio">Julio</option>
+                        <option value="Agosto">Agosto</option>
+                        <option value="Septiembre">Septiembre</option>
+                        <option value="Octubre">Octubre</option>
+                        <option value="Noviembre">Noviembre</option>
+                        <option value="Diciembre">Diciembre</option>
                     </select>
                 </div>
                 <div class="col-sm-3">
@@ -279,7 +288,7 @@ $conn->close();
                                     <option value="" disabled selected>Selecciona</option>
                                     <option value="tecnica">TC</option>
                                     <option value="tecnologico">TL</option>
-                                    <option value="tecnologico expecial">TE</option>
+                                    <option value="tecnologico especializada">TE</option>
                                     <option value="universitario">UN</option>
                                     <option value="especializacion">ES</option>
                                     <option value="maestria">MG</option>
@@ -330,18 +339,18 @@ $conn->close();
                     <label for="mesEstudio">MES:</label>
                     <select class="form-control" id="mesEstudio" name="mesEstudio">
                         <option value="" disabled selected>Selecciona</option>
-                        <option value="1">Enero</option>
-                        <option value="2">Febrero</option>
-                        <option value="3">Marzo</option>
-                        <option value="4">Abril</option>
-                        <option value="5">Mayo</option>
-                        <option value="6">Junio</option>
-                        <option value="7">Julio</option>
-                        <option value="8">Agosto</option>
-                        <option value="9">Septiembre</option>
-                        <option value="10">Octubre</option>
-                        <option value="11">Noviembre</option>
-                        <option value="12">Diciembre</option>
+                        <option value="Enero">Enero</option>
+                        <option value="Febrero">Febrero</option>
+                        <option value="Marzo">Marzo</option>
+                        <option value="Abril">Abril</option>
+                        <option value="Mayo">Mayo</option>
+                        <option value="Junio">Junio</option>
+                        <option value="Julio">Julio</option>
+                        <option value="Agosto">Agosto</option>
+                        <option value="Septiembre">Septiembre</option>
+                        <option value="Octubre">Octubre</option>
+                        <option value="Noviembre">Noviembre</option>
+                        <option value="Diciembre">Diciembre</option>
                     </select>
                 </div>
                 <div class="col-sm-3">
