@@ -1,26 +1,10 @@
 <?php
-echo "<pre>";
-echo "Contenido de \$_GET:\n";
-print_r($_GET);
-echo "</pre>";
 include('conexion.php');
 
 $entidad = $_GET['entidad'] ?? null;
 $numeroDocumento = $_GET['numeroDocumento'] ?? null;
 
-// Verificar si los valores clave están presentes
-if (!$entidad || !$numeroDocumento) {
-    die("Error: Los valores 'entidad' o 'numeroDocumento' no se recibieron correctamente por GET.");
-}
-
-// Mostrar datos recibidos para verificar
-echo "<pre>";
-echo "Entidad: " . htmlspecialchars($entidad) . "\n";
-echo "Número de Documento: " . htmlspecialchars($numeroDocumento) . "\n";
-echo "</pre>";
-
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    // Capturar los datos del formulario
     $tipoEducacion = $_POST['tipoEducacion'] ?? '';
     $titulo = $_POST['nombreTitulo'] ?? '';
     $mesEducacionBasica = $_POST['mesTitulo'] ?? '';
@@ -37,7 +21,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $loLee = $_POST['loLee'] ?? '';
     $loEscribe = $_POST['loEscribe'] ?? '';
 
-    // Insertar datos en la tabla formacion_academica
     $sql = "INSERT INTO formacion_academica (
                 tipoEducacion, titulo, mesEducacionBasica, anioEducacionBasica, modalidad, numeroSemestre, 
                 graduado, nombreEstudio, mesEducacionSuperior, anioEducacionSuperior, tarjetaProfesional, 
@@ -126,6 +109,7 @@ $conn->close();
             </div>
             <div class="bannermenu">
                 <a href="index.php" class="menu">Datos Personales</a>
+                <a href="Formacion_Academica.php" class="menu">Formacion Academica</a>
                 <a href="Experiencia_Laboral.php" class="menu">Experiencia Laboral</a>
                 <a href="Tiempo_Total_De_Experiencia.php" class="menu">Tiempo Total De Experiencia</a>
             </div>
@@ -156,9 +140,9 @@ $conn->close();
             <div class="col-sm-11">
                 <div class="text2">
                     <p>
-                        MARQUE CON UNA X EL ÚLTIMO GRADO APROBADO ( LOS GRADOS DE 1o. A 6o. DE BACHILLERATO EQUIVALEN A
+                        MARQUE CON UNA X EL ÚLTIMO GRADO APROBADO ( LOS GRADOS DE 1° A 6° DE BACHILLERATO EQUIVALEN A
                         LOS
-                        GRADOS 6o. A 11o. DE
+                        GRADOS 6° A 11° DE
                         EDUCACIÓN BÁSICA SECUNDARIA Y MEDIA )
                     </p>
                 </div>
@@ -293,9 +277,13 @@ $conn->close();
                                 <label for="modalidad" style="margin-right: 5px;">MODALIDAD ACADÉMICA</label>
                                 <select class="form-control" id="modalidad" name="modalidad">
                                     <option value="" disabled selected>Selecciona</option>
-                                    <option value="presencial">presencial</option>
-                                    <option value="distanica">distancia</option>
-                                    <option value="mixta">mixta</option>
+                                    <option value="tecnica">TC</option>
+                                    <option value="tecnologico">TL</option>
+                                    <option value="tecnologico expecial">TE</option>
+                                    <option value="universitario">UN</option>
+                                    <option value="especializacion">ES</option>
+                                    <option value="maestria">MG</option>
+                                    <option value="doctorado">DOC</option>
                                 </select>
                             </div>
                             <div class="col-xs-3">
@@ -369,7 +357,8 @@ $conn->close();
                 <div class="col-sm-11">
                     <div class="form-group">
                         <label for="numeroTarjeta">No. DE TARJETA PROFESIONAL:</label>
-                        <input type="text" class="form-control" id="numeroTarjeta" name="numeroTarjeta">
+                        <input type="text" class="form-control" id="numeroTarjeta" name="numeroTarjeta"
+                            oninput="validarSoloNumeros(this)">
                     </div>
                 </div>
             </div>
@@ -443,6 +432,11 @@ $conn->close();
                 </div>
             </div>
         </form>
+        <script>
+            function validarSoloNumeros(input) {
+                input.value = input.value.replace(/[^0-9]/g, '');
+            }
+        </script>
     </div>
 </body>
 

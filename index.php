@@ -106,6 +106,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 <div class="col-sm-1">
                 </div>
                 <div class="bannermenu">
+                    <a href="index.php" class="menu">Datos Personales</a>
                     <a href="Formacion_Academica.php" class="menu">Formacion Academica</a>
                     <a href="Experiencia_Laboral.php" class="menu">Experiencia Laboral</a>
                     <a href="Tiempo_Total_De_Experiencia.php" class="menu">Tiempo Total De Experiencia</a>
@@ -169,7 +170,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                         <div class="form-textnumero">
                             <label for="numeroDocumento" style="margin-right: 10px;">N°</label>
                             <input type="text" class="form-control" id="numeroDocumento" name="numeroDocumento"
-                                style="width: 300px;"> // poner oninput="validarSoloNumeros(this)"
+                                style="width: 300px;" oninput="validarSoloNumeros(this)">
                         </div>
                     </div>
                 </div>
@@ -227,8 +228,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                         <div class="form-textnumero">
                             <label for="numeroLibretaMilitar" style="margin-right: 10px;">N°</label>
                             <input type="text" class="form-control" id="numeroLibretaMilitar"
-                                name="numeroLibretaMilitar" style="width: 300px;"> // poner
-                            oninput="validarSoloNumeros(this)"
+                                name="numeroLibretaMilitar" style="width: 300px;" oninput="validarSoloNumeros(this)">
                         </div>
                         <div class="form-textnumero"></div>
                         <label for="dm" style="margin-right: 10px;">D.M</label>
@@ -382,8 +382,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 <div class="col-sm-11">
                     <div class="form-group">
                         <label for="telefono">TELÉFONO:</label>
-                        <input type="text" class="form-control" id="telefono" name="telefono"> // poner
-                        oninput="validarSoloNumeros(this)"
+                        <input type="text" class="form-control" id="telefono" name="telefono"
+                            oninput="validarSoloNumeros(this)">
                     </div>
                 </div>
             </div>
@@ -403,6 +403,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 </div>
             </div>
         </form>
+        <Script>
+            function validarSoloNumeros(input) {
+                input.value = input.value.replace(/[^0-9]/g, '');
+            }
+        </Script>
     </div>
 </body>
 

@@ -1,5 +1,6 @@
 <!doctype html>
 <html lang="en">
+
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -9,6 +10,7 @@
     <link rel="stylesheet" href="CSS/Stile.css">
     <script src="JavaScrpit/javaScript4.js" defer></script>
 </head>
+
 <body>
     <div class="container">
         <div class="row">
@@ -40,9 +42,10 @@
             <div class="col-sm-1">
             </div>
             <div class="bannermenu">
+                <a href="index.php" class="menu">Datos Personales</a>
                 <a href="Formacion_Academica.php" class="menu">Formacion Academica</a>
                 <a href="Experiencia_Laboral.php" class="menu">Experiencia Laboral</a>
-                <a href="index.php" class="menu">Datos Personales</a>
+                <a href="Tiempo_Total_De_Experiencia.php" class="menu">Tiempo Total De Experiencia</a>
             </div>
         </div>
         <div class="row">
@@ -231,4 +234,5 @@
     </div>
     </div>
 </body>
+
 </html>

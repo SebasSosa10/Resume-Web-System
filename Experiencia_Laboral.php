@@ -31,9 +31,10 @@
         <div class="row">
             <div class="col-sm-1"></div>
             <div class="bannermenu">
-                <a href="Formacion_Academica.php" class="menu">Formación Académica</a>
                 <a href="index.php" class="menu">Datos Personales</a>
-                <a href="Tiempo_Total_De_Experiencia.php" class="menu">Tiempo Total de Experiencia</a>
+                <a href="Formacion_Academica.php" class="menu">Formacion Academica</a>
+                <a href="Experiencia_Laboral.php" class="menu">Experiencia Laboral</a>
+                <a href="Tiempo_Total_De_Experiencia.php" class="menu">Tiempo Total De Experiencia</a>
             </div>
         </div>
         <form method="post" action="Experiencia_Laboral.php">
@@ -41,7 +42,8 @@
                 <div class="col-sm-1"></div>
                 <div class="col-sm-11">
                     <h3>3. EXPERIENCIA LABORAL</h3>
-                    <p>RELACIONE SU EXPERIENCIA LABORAL O DE PRESTACIÓN DE SERVICIOS EN ESTRICTO ORDEN CRONOLÓGICO COMENZANDO POR EL ACTUAL.</p>
+                    <p>RELACIONE SU EXPERIENCIA LABORAL O DE PRESTACIÓN DE SERVICIOS EN ESTRICTO ORDEN CRONOLÓGICO
+                        COMENZANDO POR EL ACTUAL.</p>
                 </div>
             </div>
             <div class="row">
@@ -54,11 +56,13 @@
                     </div>
                     <label>TIPO DE EMPRESA:</label>
                     <div class="form-check form-check-inline">
-                        <input class="form-check-input" type="radio" name="tipoEmpresaActual" id="publica" value="publica" checked>
+                        <input class="form-check-input" type="radio" name="tipoEmpresaActual" id="publica"
+                            value="publica" checked>
                         <label class="form-check-label" for="publica">PÚBLICA</label>
                     </div>
                     <div class="form-check form-check-inline">
-                        <input class="form-check-input" type="radio" name="tipoEmpresaActual" id="privada" value="privada">
+                        <input class="form-check-input" type="radio" name="tipoEmpresaActual" id="privada"
+                            value="privada">
                         <label class="form-check-label" for="privada">PRIVADA</label>
                     </div>
                     <div class="form-group mt-3">
