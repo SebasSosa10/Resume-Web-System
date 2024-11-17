@@ -1,3 +1,65 @@
+<?php
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
+
+include('conexion.php');
+
+if ($conn->connect_error) {
+    die("Error de conexión: " . $conn->connect_error);
+}
+
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+
+    $entidad = isset($_POST['entidad']) ? trim($_POST['entidad']) : null;
+    $primerApellido = $conn->real_escape_string($_POST['primerApellido']);
+    $segundoApellido = $conn->real_escape_string($_POST['segundoApellido']);
+    $nombre = $conn->real_escape_string($_POST['nombre']);
+    $tipoDocumento = $conn->real_escape_string($_POST['tipoDocumento']);
+    $numeroDocumento = isset($_POST['numeroDocumento']) ? trim($_POST['numeroDocumento']) : null;
+    $sexo = $conn->real_escape_string($_POST['sexo']);
+    $tipoNacionalidad = $conn->real_escape_string($_POST['tipoNacionalidad']);
+    $paisNacionalidad = isset($_POST['paisNacionalidad']) ? $conn->real_escape_string($_POST['paisNacionalidad']) : 'Desconocido';
+    $tipoLibretaMilitar = $conn->real_escape_string($_POST['tipoLibreta']);
+    $numeroLibretaMilitar = $conn->real_escape_string($_POST['numeroLibretaMilitar']);
+    $dm = $conn->real_escape_string($_POST['dm']);
+    $fechaNacimiento = $conn->real_escape_string($_POST['fechaNacimiento']);
+    $paisNacimiento = $conn->real_escape_string($_POST['paisNacimiento']);
+    $departamentoNacimiento = $conn->real_escape_string($_POST['departamentoNacimiento']);
+    $municipioNacimiento = $conn->real_escape_string($_POST['municipioNacimiento']);
+    $paisCorrespondencia = $conn->real_escape_string($_POST['paisCorrespondencia']);
+    $departamentoCorrespondencia = $conn->real_escape_string($_POST['departamentoCorrespondencia']);
+    $municipioCorrespondencia = $conn->real_escape_string($_POST['municipioCorrespondencia']);
+    $telefono = $conn->real_escape_string($_POST['telefono']);
+    $email = $conn->real_escape_string($_POST['email']);
+
+    if (empty($primerApellido) || empty($nombre) || empty($numeroDocumento) || empty($email)) {
+        echo "<script>alert('Por favor complete todos los campos obligatorios.');</script>";
+    } else {
+
+        $sql = "INSERT INTO persona 
+                (entidad, primerApellido, segundoApellido, nombre, tipoDocumento, numeroDocumento, sexo, 
+                tipoNacionalidad, paisNacionalidad, tipoLibretaMilitar, numeroLibretaMilitar, dm, fechaNacimiento, 
+                paisNacimiento, departamentoNacimiento, municipioNacimiento, paisCorrespondencia, departamentoCorrespondencia, 
+                municipioCorrespondencia, telefono, email)
+                VALUES 
+                ('$entidad', '$primerApellido', '$segundoApellido', '$nombre', '$tipoDocumento', '$numeroDocumento', 
+                '$sexo', '$tipoNacionalidad', '$paisNacionalidad', '$tipoLibretaMilitar', '$numeroLibretaMilitar', 
+                '$dm', '$fechaNacimiento', '$paisNacimiento', '$departamentoNacimiento', '$municipioNacimiento', 
+                '$paisCorrespondencia', '$departamentoCorrespondencia', '$municipioCorrespondencia', 
+                '$telefono', '$email')";
+
+        if ($conn->query($sql) === TRUE) {
+            // Redirigir a Formacion_Academica.php con los datos
+            header("Location: Formacion_Academica.php?entidad=" . urlencode($entidad) . "&numeroDocumento=" . urlencode($numeroDocumento));
+            exit;
+        } else {
+            echo "Error al guardar los datos: " . $conn->error;
+        }
+    }
+    $conn->close();
+}
+?>
 <!doctype html>
 <html lang="en">
 
@@ -341,111 +403,6 @@
                 </div>
             </div>
         </form>
-
-        <?php
-        include('conexion.php');
-        if ($conn->connect_error) {
-            die("Error de conexión: " . $conn->connect_error);
-        }
-
-        if ($_SERVER["REQUEST_METHOD"] == "POST") {
-            $entidad = $conn->real_escape_string($_POST['entidad']);
-            $primerApellido = $conn->real_escape_string($_POST['primerApellido']);
-            $segundoApellido = $conn->real_escape_string($_POST['segundoApellido']);
-            $nombre = $conn->real_escape_string($_POST['nombre']);
-            $tipoDocumento = $conn->real_escape_string($_POST['tipoDocumento']);
-            $numeroDocumento = $conn->real_escape_string($_POST['numeroDocumento']);
-            $sexo = $conn->real_escape_string($_POST['sexo']);
-            $tipoNacionalidad = $conn->real_escape_string($_POST['tipoNacionalidad']);
-            $paisNacionalidad = isset($_POST['paisNacionalidad']) ? $conn->real_escape_string($_POST['paisNacionalidad']) : 'Desconocido';
-            $tipoLibretaMilitar = $conn->real_escape_string($_POST['tipoLibreta']);
-            $numeroLibretaMilitar = $conn->real_escape_string($_POST['numeroLibretaMilitar']);
-            $dm = $conn->real_escape_string($_POST['dm']);
-            $fechaNacimiento = $conn->real_escape_string($_POST['fechaNacimiento']);
-            $paisNacimiento = $conn->real_escape_string($_POST['paisNacimiento']);
-            $departamentoNacimiento = $conn->real_escape_string($_POST['departamentoNacimiento']);
-            $municipioNacimiento = $conn->real_escape_string($_POST['municipioNacimiento']);
-            $paisCorrespondencia = $conn->real_escape_string($_POST['paisCorrespondencia']);
-            $departamentoCorrespondencia = $conn->real_escape_string($_POST['departamentoCorrespondencia']);
-            $municipioCorrespondencia = $conn->real_escape_string($_POST['municipioCorrespondencia']);
-            $telefono = $conn->real_escape_string($_POST['telefono']);
-            $email = $conn->real_escape_string($_POST['email']);
-
-            // Validación de campos obligatorios
-            if (empty($primerApellido) || empty($nombre) || empty($numeroDocumento) || empty($email)) {
-                echo "<script>alert('Por favor complete todos los campos obligatorios.');</script>";
-                exit;
-            }
-
-            $sql = "INSERT INTO persona
-            (entidad, primerApellido, segundoApellido, nombre, tipoDocumento, numeroDocumento, sexo, 
-            tipoNacionalidad, paisNacionalidad, tipoLibretaMilitar, numeroLibretaMilitar, dm, fechaNacimiento, 
-            paisNacimiento, departamentoNacimiento, municipioNacimiento, paisCorrespondencia, departamentoCorrespondencia, 
-            municipioCorrespondencia, telefono, email)
-            VALUES 
-            ('$entidad', '$primerApellido', '$segundoApellido', '$nombre', '$tipoDocumento', '$numeroDocumento', 
-            '$sexo', '$tipoNacionalidad', '$paisNacionalidad', '$tipoLibretaMilitar', '$numeroLibretaMilitar', 
-            '$dm', '$fechaNacimiento', '$paisNacimiento', '$departamentoNacimiento', '$municipioNacimiento', 
-            '$paisCorrespondencia', '$departamentoCorrespondencia', '$municipioCorrespondencia', 
-            '$telefono', '$email')";
-
-            $check_sql = "SELECT numeroDocumento FROM persona WHERE entidad = '$entidad' AND numeroDocumento = '$numeroDocumento'";
-            $result = $conn->query($check_sql);
-
-            if ($result->num_rows > 0) {
-                echo "<script>
-                    alert('Ya existe un registro con esta entidad y número de documento.');
-                    </script>";
-            } else {
-                $sql = "INSERT INTO persona
-                (entidad, primerApellido, segundoApellido, nombre, tipoDocumento, numeroDocumento, sexo, 
-                tipoNacionalidad, paisNacionalidad, tipoLibretaMilitar, numeroLibretaMilitar, dm, fechaNacimiento, 
-                paisNacimiento, departamentoNacimiento, municipioNacimiento, paisCorrespondencia, departamentoCorrespondencia, 
-                municipioCorrespondencia, telefono, email)
-                VALUES 
-                ('$entidad', '$primerApellido', '$segundoApellido', '$nombre', '$tipoDocumento', '$numeroDocumento', 
-                '$sexo', '$tipoNacionalidad', '$paisNacionalidad', '$tipoLibretaMilitar', '$numeroLibretaMilitar', 
-                '$dm', '$fechaNacimiento', '$paisNacimiento', '$departamentoNacimiento', '$municipioNacimiento', 
-                '$paisCorrespondencia', '$departamentoCorrespondencia', '$municipioCorrespondencia', 
-                '$telefono', '$email')";
-
-                if ($conn->query($sql) === TRUE) {
-                    session_start();
-                    $_SESSION['persona_id'] = $conn->insert_id;
-                    echo "<script>
-                        window.location.href = 'Formacion_Academica.php';
-                        </script>";
-                } else {
-                    echo "<script>
-                        alert('Error al guardar los datos: " . $conn->error . "');
-                        </script>";
-                }
-            }
-            $conn->close();
-        }
-        ?>
-        <script>
-            function validarSoloNumeros(inputElement) {
-                let valorActual = inputElement.value;
-                let valorNumerico = valorActual.replace(/[^0-9]/g, '');
-                if (valorActual !== valorNumerico) {
-                    alert("Por favor, ingrese solo números.");
-                }
-                inputElement.value = valorNumerico;
-            }
-            
-            if (window.history.replaceState) {
-                window.history.replaceState(null, null, window.location.href);
-            }
-            document.getElementById('datosPersonalesForm').addEventListener('submit', function (e) {
-                var entidad = document.getElementById('entidad').value;
-                var numeroDocumento = document.getElementById('numeroDocumento').value;
-                if (!entidad || !numeroDocumento) {
-                    e.preventDefault();
-                    alert('La entidad y el número de documento son campos obligatorios.');
-                }
-            });
-        </script>
     </div>
 </body>
 
