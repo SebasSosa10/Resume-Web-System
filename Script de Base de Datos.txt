@@ -1,0 +1,149 @@
+CREATE DATABASE hoja-de-vida;
+
+CREATE TABLE `persona` (
+  `numeroDocumento` VARCHAR(16) NOT NULL,
+  `entidad` VARCHAR(150) NOT NULL,
+  `primerApellido` varchar(50) DEFAULT NULL,
+  `segundoApellido` varchar(50) DEFAULT NULL,
+  `nombre` varchar(50) DEFAULT NULL,
+  `tipoDocumento` varchar(50) DEFAULT NULL,
+  `sexo`varchar(50) DEFAULT NULL,
+  `tipoNacionalidad` varchar(50) DEFAULT NULL,
+  `paisNacionalidad` varchar(50) DEFAULT NULL,
+  `tipoLibretaMilitar` varchar(20) DEFAULT NULL,
+  `numeroLibretaMilitar` varchar(20) DEFAULT NULL,
+  `dm` varchar(10) DEFAULT NULL,
+  `fechaNacimiento` date DEFAULT NULL,
+  `paisNacimiento` varchar(50) DEFAULT NULL,
+  `departamentoNacimiento` varchar(50) DEFAULT NULL,
+  `municipioNacimiento` varchar(50) DEFAULT NULL,
+  `paisCorrespondencia` varchar(50) DEFAULT NULL,
+  `departamentoCorrespondencia` varchar(50) DEFAULT NULL,
+  `municipioCorrespondencia` varchar(50) DEFAULT NULL,
+  `telefono` varchar(20) DEFAULT NULL,
+  `email` varchar(100) DEFAULT NULL
+);
+
+CREATE TABLE `experiencia_laboral` (
+  `idExperienciaLaboral` int NOT NULL,
+  `empresa` VARCHAR(150) DEFAULT NULL,
+  `tipo` varchar(100) DEFAULT NULL,
+  `pais` varchar(100) DEFAULT NULL,
+  `departamento` varchar(100) DEFAULT NULL,
+  `ciudad` varchar(100) DEFAULT NULL,
+  `correo` varchar(255) DEFAULT NULL,
+  `telefono` varchar(100) DEFAULT NULL,
+  `cargo` varchar(100) DEFAULT NULL,
+  `dependencia` varchar(100) DEFAULT NULL,
+  `direccion` VARCHAR(150) DEFAULT NULL,
+  `fechaIngreso` date DEFAULT NULL,
+  `fechaRetiro` date DEFAULT NULL,
+  `idPersona` VARCHAR(16) NOT NULL
+);
+
+
+CREATE TABLE `formacion_academica` (
+  `idFormacionAcademica` int NOT NULL,
+  `tipoEducacion` varchar(100) DEFAULT NULL,
+  `titulo` varchar(100) DEFAULT NULL,
+  `mesEducacionBasica` varchar(10) DEFAULT NULL,
+  `anioEducacionBasica` varchar(10) DEFAULT NULL,
+  `modalidad` varchar(50) DEFAULT NULL,
+  `numeroSemestre` varchar(100) DEFAULT NULL,
+  `graduado` ENUM('SI', 'NO') DEFAULT NULL,
+  `nombreEstudio` varchar(200) NOT NULL,
+  `mesEducacionSuperior` varchar(10) DEFAULT NULL,
+  `anioEducacionSuperior` varchar(10) DEFAULT NULL,
+  `tarjetaProfesional` varchar(20) DEFAULT NULL,
+  `idioma` varchar(50) DEFAULT NULL,
+  `loHabla` varchar(50) DEFAULT NULL,
+  `loLee` varchar(50) DEFAULT NULL,
+  `loEscribe` varchar(50) DEFAULT NULL,
+  `idPersona` VARCHAR(16) NOT NULL
+);
+
+CREATE TABLE `tiempo_total_de_experiencia` (
+  `idTiempoExperiencia` int NOT NULL,
+  `mesServidorPublico` int DEFAULT NULL,
+  `anioServidorPublico` int DEFAULT NULL,
+  `mesEmpleadoPrivado` int DEFAULT NULL,
+  `anioEmpleadoPrivado` int DEFAULT NULL,
+  `mesIndependiente` int DEFAULT NULL,
+  `anioIndependiente` int DEFAULT NULL,
+  `total_anios` VARCHAR(20) NOT NULL,
+  `total_meses` VARCHAR(20) NOT NULL,
+  `idPersona` VARCHAR(16) NOT NULL
+);
+
+--
+-- Indices de la tabla `experiencia_laboral`
+--
+ALTER TABLE `experiencia_laboral`
+  ADD PRIMARY KEY (`idExperienciaLaboral`),
+  ADD KEY `fk_experiencia_laboral_persona` (`idPersona`);
+
+--
+-- Indices de la tabla `formacion_academica`
+--
+ALTER TABLE `formacion_academica`
+  ADD PRIMARY KEY (`idFormacionAcademica`),
+  ADD KEY `fk_formacion_academica_persona` (`idPersona`);
+
+--
+-- Indices de la tabla `persona`
+--
+ALTER TABLE `persona`
+  ADD PRIMARY KEY (`numeroDocumento`),
+  ADD KEY `idx_persona_numero_documento` (`numeroDocumento`);
+
+--
+-- Indices de la tabla `tiempo_total_de_experiencia`
+--
+ALTER TABLE `tiempo_total_de_experiencia`
+  ADD PRIMARY KEY (`idTiempoExperiencia`),
+  ADD KEY `fk_tiempo_total_de_experiencia_persona` (`idPersona`);
+
+--
+-- AUTO_INCREMENT de las tablas volcadas
+--
+
+--
+-- AUTO_INCREMENT de la tabla `experiencia_laboral`
+--
+ALTER TABLE `experiencia_laboral`
+  MODIFY `idExperienciaLaboral` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
+-- AUTO_INCREMENT de la tabla `formacion_academica`
+--
+ALTER TABLE `formacion_academica`
+  MODIFY `idFormacionAcademica` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
+
+--
+-- AUTO_INCREMENT de la tabla `tiempo_total_de_experiencia`
+--
+ALTER TABLE `tiempo_total_de_experiencia`
+  MODIFY `idTiempoExperiencia` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
+-- Restricciones para tablas volcadas
+--
+
+--
+-- Filtros para la tabla `experiencia_laboral`
+--
+ALTER TABLE `experiencia_laboral`
+  ADD CONSTRAINT `fk_experiencia_laboral_persona` FOREIGN KEY (`idPersona`) REFERENCES `persona` (`numeroDocumento`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Filtros para la tabla `formacion_academica`
+--
+ALTER TABLE `formacion_academica`
+  ADD CONSTRAINT `fk_formacion_academica_persona` FOREIGN KEY (`idPersona`) REFERENCES `persona` (`numeroDocumento`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Filtros para la tabla `tiempo_total_de_experiencia`
+--
+ALTER TABLE `tiempo_total_de_experiencia`
+  ADD CONSTRAINT `fk_tiempo_total_de_experiencia_persona` FOREIGN KEY (`idPersona`) REFERENCES `persona` (`numeroDocumento`) ON DELETE CASCADE ON UPDATE CASCADE;
+
