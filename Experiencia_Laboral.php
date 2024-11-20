@@ -1,57 +1,128 @@
 <?php
 include('conexion.php');
 
+// Obtener parámetros de la URL
 $entidad = $_GET['entidad'] ?? null;
 $numeroDocumento = $_GET['numeroDocumento'] ?? null;
 
+// Variable para almacenar mensajes
+$alertMessage = '';
+
+// Verificar si se ha enviado el formulario
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $empresa = $conn->real_escape_string($_POST['empresaActual']);
-    $tipo = $conn->real_escape_string($_POST['tipoEmpresaActual']);
-    $pais = $conn->real_escape_string($_POST['paisActual']);
-    $departamento = $conn->real_escape_string($_POST['departamentoActual']);
-    $ciudad = $conn->real_escape_string($_POST['capitalActual']);
-    $correo = $conn->real_escape_string($_POST['correoEntidadActual']);
-    $telefono = $conn->real_escape_string($_POST['telefonoEntidadActual']);
-    $cargo = $conn->real_escape_string($_POST['cargo']);
-    $dependencia = $conn->real_escape_string($_POST['dependenciaActual']);
-    $direccion = $conn->real_escape_string($_POST['direccionActual']);
-    $fechaIngreso = $conn->real_escape_string($_POST['fechaIngresoActual']);
-    $fechaRetiro = $conn->real_escape_string($_POST['fechaRetiroActual']);
-
+    // Validar si existen los datos personales
     if (!$entidad || !$numeroDocumento) {
-        echo "<script>
-            alert('Debe llenar los Datos Personales primero.');
-            window.location.href = 'Experiencia_Laboral.php';
-        </script>";
-        exit();
-    }
-
-    // Preparar la consulta
-    $stmt = $conn->prepare("INSERT INTO experiencia_laboral (empresa, tipo, pais, departamento, ciudad, correo, telefono, cargo, dependencia, direccion, fechaIngreso, fechaRetiro, idPersona)
-                            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
-
-    if (!$stmt) {
-        echo "<div class='alert alert-danger'>Error en la preparación de la consulta: " . $conn->error . "</div>";
-        exit();
-    }
-
-    // Vincular parámetros
-    $stmt->bind_param("ssssssssssssi", $empresa, $tipo, $pais, $departamento, $ciudad, $correo, $telefono, $cargo, $dependencia, $direccion, $fechaIngreso, $fechaRetiro, $numeroDocumento);
-
-    // Ejecutar la consulta
-    if ($stmt->execute()) {
-        header("Location: Tiempo_Total_De_Experiencia.php?entidad=" . urlencode($entidad) . "&numeroDocumento=" . urlencode($numeroDocumento));
-        exit();
+        $alertMessage = '<div class="alert alert-warning" role="alert">
+            <h4 class="alert-heading">¡Atención!</h4>
+            <p>Antes de continuar, es necesario completar los datos personales.</p>
+            <hr>
+            <p class="mb-0">Por favor, complete primero la sección de datos personales.</p>
+            <div class="mt-3">
+                <a href="index.php" class="btn btn-primary">Ir a Datos Personales</a>
+            </div>
+        </div>';
     } else {
-        echo "<div class='alert alert-danger'>Error al guardar los datos: " . $stmt->error . "</div>";
-    }
+        // Capturar y validar los datos del formulario
+        $formData = [
+            'tipoEducacion' => $_POST['tipoEducacion'] ?? '',
+            'titulo' => $_POST['nombreTitulo'] ?? '',
+            'mesEducacionBasica' => $_POST['mesTitulo'] ?? '',
+            'anioEducacionBasica' => $_POST['anioTitulo'] ?? '',
+            'modalidad' => $_POST['modalidad'] ?? '',
+            'numeroSemestre' => $_POST['semestre'] ?? '',
+            'graduado' => $_POST['graduado'] ?? '',
+            'nombreEstudio' => $_POST['nombreEstudios'] ?? '',
+            'mesEducacionSuperior' => $_POST['mesEstudio'] ?? '',
+            'anioEducacionSuperior' => $_POST['anioEstudio'] ?? '',
+            'tarjetaProfesional' => $_POST['numeroTarjeta'] ?? '',
+            'idioma' => $_POST['idioma'] ?? '',
+            'loHabla' => $_POST['loHabla'] ?? '',
+            'loLee' => $_POST['loLee'] ?? '',
+            'loEscribe' => $_POST['loEscribe'] ?? ''
+        ];
 
-    $stmt->close();
+        // Verificar campos requeridos
+        $requiredFields = [
+            'tipoEducacion',
+            'titulo',
+            'anioEducacionBasica',
+            'modalidad',
+            'graduado',
+            'nombreEstudio',
+            'idioma',
+            'loHabla',
+            'loLee',
+            'loEscribe'
+        ];
+
+        $emptyFields = array_filter($requiredFields, function ($field) use ($formData) {
+            return empty($formData[$field]);
+        });
+
+        if (!empty($emptyFields)) {
+            $alertMessage = '<div class="alert alert-warning" role="alert">
+                <h4 class="alert-heading">Campos Incompletos</h4>
+                <p>Por favor, complete todos los campos requeridos del formulario.</p>
+            </div>';
+        } else {
+            // Preparar y ejecutar la consulta SQL
+            $sql = "INSERT INTO formacion_academica (
+                tipoEducacion, titulo, mesEducacionBasica, anioEducacionBasica, 
+                modalidad, numeroSemestre, graduado, nombreEstudio, 
+                mesEducacionSuperior, anioEducacionSuperior, tarjetaProfesional, 
+                idioma, loHabla, loLee, loEscribe, idPersona
+            ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+
+            if ($stmt = $conn->prepare($sql)) {
+                $stmt->bind_param(
+                    "ssssssssssssssss",
+                    $formData['tipoEducacion'],
+                    $formData['titulo'],
+                    $formData['mesEducacionBasica'],
+                    $formData['anioEducacionBasica'],
+                    $formData['modalidad'],
+                    $formData['numeroSemestre'],
+                    $formData['graduado'],
+                    $formData['nombreEstudio'],
+                    $formData['mesEducacionSuperior'],
+                    $formData['anioEducacionSuperior'],
+                    $formData['tarjetaProfesional'],
+                    $formData['idioma'],
+                    $formData['loHabla'],
+                    $formData['loLee'],
+                    $formData['loEscribe'],
+                    $numeroDocumento
+                );
+
+                if ($stmt->execute()) {
+                    // Redirigir al siguiente paso
+                    header("Location: Experiencia_Laboral.php?entidad=" . urlencode($entidad) .
+                        "&numeroDocumento=" . urlencode($numeroDocumento));
+                    exit();
+                } else {
+                    $alertMessage = '<div class="alert alert-danger" role="alert">
+                        <h4 class="alert-heading">Error</h4>
+                        <p>Error al guardar los datos: ' . $stmt->error . '</p>
+                    </div>';
+                }
+                $stmt->close();
+            } else {
+                $alertMessage = '<div class="alert alert-danger" role="alert">
+                    <h4 class="alert-heading">Error</h4>
+                    <p>Error en la preparación de la consulta: ' . $conn->error . '</p>
+                </div>';
+            }
+        }
+    }
 }
 
 $conn->close();
-?>
 
+// Mostrar mensaje de alerta si existe
+if (!empty($alertMessage)) {
+    echo $alertMessage;
+}
+?>
 <!doctype html>
 <html lang="en">
 
@@ -87,7 +158,7 @@ $conn->close();
             <div class="col-sm-1"></div>
             <div class="bannermenu">
                 <a href="index.php" class="menu">Datos Personales</a>
-                <a href="Formacion_Academica.php" class="menu">Formacion Academica</a>
+                <a href="Formacion_Academica.php" class="menu">Formación Académica</a>
                 <a href="Experiencia_Laboral.php" class="menu">Experiencia Laboral</a>
                 <a href="Tiempo_Total_De_Experiencia.php" class="menu">Tiempo Total De Experiencia</a>
                 <a href="buscar.php" class="menu">Buscar Registro</a>
@@ -141,7 +212,7 @@ $conn->close();
                         </select>
                     </div>
                     <div class="form-group mt-3">
-                        <label for="capitalActual">CAPITAL:</label>
+                        <label for="capitalActual">MUNICIPIO:</label>
                         <select class="form-control" id="capitalActual" name="capitalActual">
                             <option value="" disabled selected>Selecciona</option>
                             <option value="bogota">Bogotá</option>

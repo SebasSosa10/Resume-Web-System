@@ -4,6 +4,9 @@ include('conexion.php');
 $entidad = $_GET['entidad'] ?? null;
 $numeroDocumento = $_GET['numeroDocumento'] ?? null;
 
+// Variable para almacenar mensajes de error
+$errorMessage = '';
+
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Capturar los datos del formulario
     $tipoEducacion = $_POST['tipoEducacion'] ?? '';
@@ -22,65 +25,110 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $loLee = $_POST['loLee'] ?? '';
     $loEscribe = $_POST['loEscribe'] ?? '';
 
-    // Insertar datos en la tabla formacion_academica
-    $sql = "INSERT INTO formacion_academica (
-                tipoEducacion, titulo, mesEducacionBasica, anioEducacionBasica, modalidad, numeroSemestre, 
-                graduado, nombreEstudio, mesEducacionSuperior, anioEducacionSuperior, tarjetaProfesional, 
-                idioma, loHabla, loLee, loEscribe, idPersona
-            ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+    // Validar si faltan datos personales
+    if (!$entidad || !$numeroDocumento) {
+        $errorMessage = '<div class="alert alert-warning" role="alert">
+            <h4 class="alert-heading">¡Atención!</h4>
+            <p>Antes de continuar con la formación académica, es necesario completar los datos personales.</p>
+            <hr>
+            <p class="mb-0">Por favor, complete primero la sección de datos personales.</p>
+            <div class="mt-3">
+                <a href="index.php" class="btn btn-primary">Ir a Datos Personales</a>
+            </div>
+        </div>';
+    }
+    // Validar campos requeridos del formulario
+    elseif (
+        empty($tipoEducacion) || empty($titulo) || empty($anioEducacionBasica) ||
+        empty($modalidad) || empty($graduado) || empty($nombreEstudio) ||
+        empty($idioma) || empty($loHabla) || empty($loLee) || empty($loEscribe)
+    ) {
 
-    if ($stmt = $conn->prepare($sql)) {
-        $stmt->bind_param(
-            "ssssssssssssssss",
-            $tipoEducacion,
-            $titulo,
-            $mesEducacionBasica,
-            $anioEducacionBasica,
-            $modalidad,
-            $numeroSemestre,
-            $graduado,
-            $nombreEstudio,
-            $mesEducacionSuperior,
-            $anioEducacionSuperior,
-            $tarjetaProfesional,
-            $idioma,
-            $loHabla,
-            $loLee,
-            $loEscribe,
-            $numeroDocumento
-        );
-
-        if (!$entidad || !$numeroDocumento) {
-            echo "<script>
-            alert('Debe llenar los Datos Personales primero.');
-            window.location.href = 'Experiencia_Laboral.php';
-            </script>";
-            exit();
-        }
-
-        if (!$entidad || !$numeroDocumento) {
-            echo "<script>
-            alert('Debe llenar los Datos Personales primero.');
-            window.location.href = 'Formacion_Acadeica.php';
-            </script>";
-            exit();
-        }
-
-        if ($stmt->execute()) {
-            header("Location: Experiencia_Laboral.php?entidad=" . urlencode($entidad) . "&numeroDocumento=" . urlencode($numeroDocumento));
-            exit();
-        } else {
-            echo "<div class='alert alert-danger'>Error al guardar los datos: " . $stmt->error . "</div>";
-        }
-
-        $stmt->close();
+        $errorMessage = '<div class="alert alert-warning" role="alert">
+            <h4 class="alert-heading">Campos Incompletos</h4>
+            <p>Por favor, complete todos los campos requeridos del formulario.</p>
+        </div>';
     } else {
-        echo "<div class='alert alert-danger'>Error en la preparación de la consulta: " . $conn->error . "</div>";
+        // Verificar si ya existe un registro con la misma entidad y número de identificación
+        $checkSql = "SELECT 1 FROM formacion_academica WHERE idPersona = ? AND entidad = ?";
+        if ($stmt = $conn->prepare($checkSql)) {
+            $stmt->bind_param("ss", $numeroDocumento, $entidad);
+            $stmt->execute();
+            $stmt->store_result();
+
+            if ($stmt->num_rows > 0) {
+                // Ya existe un registro
+                $errorMessage = '<div class="alert alert-danger" role="alert">
+                    <h4 class="alert-heading">Error</h4>
+                    <p>Ya existe un registro con este número de identificación y entidad.</p>
+                </div>';
+            } else {
+                // Insertar datos en la tabla formacion_academica
+                $stmt->close();
+
+                $sql = "INSERT INTO formacion_academica (
+                    tipoEducacion, titulo, mesEducacionBasica, anioEducacionBasica, 
+                    modalidad, numeroSemestre, graduado, nombreEstudio, 
+                    mesEducacionSuperior, anioEducacionSuperior, tarjetaProfesional, 
+                    idioma, loHabla, loLee, loEscribe, idPersona
+                ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+
+                if ($stmt = $conn->prepare($sql)) {
+                    $stmt->bind_param(
+                        "ssssssssssssssss",
+                        $tipoEducacion,
+                        $titulo,
+                        $mesEducacionBasica,
+                        $anioEducacionBasica,
+                        $modalidad,
+                        $numeroSemestre,
+                        $graduado,
+                        $nombreEstudio,
+                        $mesEducacionSuperior,
+                        $anioEducacionSuperior,
+                        $tarjetaProfesional,
+                        $idioma,
+                        $loHabla,
+                        $loLee,
+                        $loEscribe,
+                        $numeroDocumento
+                    );
+
+                    if ($stmt->execute()) {
+                        header("Location: Experiencia_Laboral.php?entidad=" . urlencode($entidad) .
+                            "&numeroDocumento=" . urlencode($numeroDocumento));
+                        exit();
+                    } else {
+                        $errorMessage = '<div class="alert alert-danger">
+                            <h4 class="alert-heading">Error</h4>
+                            <p>Error al guardar los datos: ' . $stmt->error . '</p>
+                        </div>';
+                    }
+                    $stmt->close();
+                } else {
+                    $errorMessage = '<div class="alert alert-danger">
+                        <h4 class="alert-heading">Error</h4>
+                        <p>Error en la preparación de la consulta: ' . $conn->error . '</p>
+                    </div>';
+                }
+            }
+        } else {
+            $errorMessage = '<div class="alert alert-danger">
+                <h4 class="alert-heading">Error</h4>
+                <p>Error en la validación de duplicados: ' . $conn->error . '</p>
+            </div>';
+        }
     }
 }
 
 $conn->close();
+
+// Mostrar el mensaje de error si existe
+if (!empty($errorMessage)) {
+    echo $errorMessage;
+}
 ?>
+
 <!doctype html>
 <html lang="en">
 
@@ -105,7 +153,7 @@ $conn->close();
             </div>
             <div class="col-sm-4">
                 <p align="center">
-                    FORMATO UNICO
+                    FORMATO ÚNICO
                 </p>
                 <h1 align="center">
                     HOJA DE VIDA
@@ -128,7 +176,7 @@ $conn->close();
             </div>
             <div class="bannermenu">
                 <a href="index.php" class="menu">Datos Personales</a>
-                <a href="Formacion_Academica.php" class="menu">Formacion Academica</a>
+                <a href="Formacion_Academica.php" class="menu">Formación Académica</a>
                 <a href="Experiencia_Laboral.php" class="menu">Experiencia Laboral</a>
                 <a href="Tiempo_Total_De_Experiencia.php" class="menu">Tiempo Total De Experiencia</a>
                 <a href="buscar.php" class="menu">Buscar Registro</a>
@@ -186,38 +234,38 @@ $conn->close();
                 <div class="col-sm-3 text-center">
                     <h6>PRIMARIA</h6>
                     <div>
-                        <label class="radio-inline"><input type="radio" name="tipoEducacion"
-                                id="tipoEducacion">1</label>
-                        <label class="radio-inline"><input type="radio" name="tipoEducacion"
-                                id="tipoEducacion">2</label>
-                        <label class="radio-inline"><input type="radio" name="tipoEducacion"
-                                id="tipoEducacion">3</label>
-                        <label class="radio-inline"><input type="radio" name="tipoEducacion"
-                                id="tipoEducacion">4</label>
-                        <label class="radio-inline"><input type="radio" name="tipoEducacion"
-                                id="tipoEducacion">5</label>
+                        <label class="radio-inline">1</label>
+                        <input type="radio" name="tipoEducacion" id="tipoEducacion" value="1">
+                        <label class="radio-inline">2</label>
+                        <input type="radio" name="tipoEducacion" id="tipoEducacion" value="2">
+                        <label class="radio-inline">3</label>
+                        <input type="radio" name="tipoEducacion" id="tipoEducacion" value="3">
+                        <label class="radio-inline">4</label>
+                        <input type="radio" name="tipoEducacion" id="tipoEducacion" value="4">
+                        <label class="radio-inline">5</label>
+                        <input type="radio" name="tipoEducacion" id="tipoEducacion" value="5">
                     </div>
                 </div>
                 <div class="col-sm-3 text-center">
                     <h6>SECUNDARIA</h6>
                     <div>
-                        <label class="radio-inline"><input type="radio" name="tipoEducacion"
-                                id="tipoEducacion">6</label>
-                        <label class="radio-inline"><input type="radio" name="tipoEducacion"
-                                id="tipoEducacion">7</label>
-                        <label class="radio-inline"><input type="radio" name="tipoEducacion"
-                                id="tipoEducacion">8</label>
-                        <label class="radio-inline"><input type="radio" name="tipoEducacion"
-                                id="tipoEducacion">9</label>
+                        <label class="radio-inline">6</label>
+                        <input type="radio" name="tipoEducacion" id="tipoEducacion" value="6">
+                        <label class="radio-inline">7</label>
+                        <input type="radio" name="tipoEducacion" id="tipoEducacion" value="7">
+                        <label class="radio-inline">8</label>
+                        <input type="radio" name="tipoEducacion" id="tipoEducacion" value="8">
+                        <label class="radio-inline">9</label>
+                        <input type="radio" name="tipoEducacion" id="tipoEducacion" value="9">
                     </div>
                 </div>
                 <div class="col-sm-3 text-center">
                     <h6>MEDIA</h6>
                     <div>
-                        <label class="radio-inline"><input type="radio" name="tipoEducacion"
-                                id="tipoEducacion">10</label>
-                        <label class="radio-inline"><input type="radio" name="tipoEducacion"
-                                id="tipoEducacion">11</label>
+                        <label class="radio-inline">10</label>
+                        <input type="radio" name="tipoEducacion" id="tipoEducacion" value="10">
+                        <label class="radio-inline">11</label>
+                        <input type="radio" name="tipoEducacion" id="tipoEducacion" value="11">
                     </div>
                 </div>
             </div>

@@ -1,79 +1,4 @@
 <?php
-/* ini_set('display_errors', 1);
-ini_set('display_startup_errors', 1);
-error_reporting(E_ALL);
-
-include('conexion.php');
-
-if ($conn->connect_error) {
-    die("Error de conexión: " . $conn->connect_error);
-}
-
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-
-    $entidad = isset($_POST['entidad']) ? trim($_POST['entidad']) : null;
-    $primerApellido = $conn->real_escape_string($_POST['primerApellido']);
-    $segundoApellido = $conn->real_escape_string($_POST['segundoApellido']);
-    $nombre = $conn->real_escape_string($_POST['nombre']);
-    $tipoDocumento = $conn->real_escape_string($_POST['tipoDocumento']);
-    $numeroDocumento = isset($_POST['numeroDocumento']) ? trim($_POST['numeroDocumento']) : null;
-    $sexo = $conn->real_escape_string($_POST['sexo']);
-    $tipoNacionalidad = $conn->real_escape_string($_POST['tipoNacionalidad']);
-    $paisNacionalidad = isset($_POST['paisNacionalidad']) ? $conn->real_escape_string($_POST['paisNacionalidad']) : 'Desconocido';
-    $tipoLibretaMilitar = $conn->real_escape_string($_POST['tipoLibreta']);
-    $numeroLibretaMilitar = $conn->real_escape_string($_POST['numeroLibretaMilitar']);
-    $dm = $conn->real_escape_string($_POST['dm']);
-    $fechaNacimiento = $conn->real_escape_string($_POST['fechaNacimiento']);
-    $paisNacimiento = $conn->real_escape_string($_POST['paisNacimiento']);
-    $departamentoNacimiento = $conn->real_escape_string($_POST['departamentoNacimiento']);
-    $municipioNacimiento = $conn->real_escape_string($_POST['municipioNacimiento']);
-    $paisCorrespondencia = $conn->real_escape_string($_POST['paisCorrespondencia']);
-    $departamentoCorrespondencia = $conn->real_escape_string($_POST['departamentoCorrespondencia']);
-    $municipioCorrespondencia = $conn->real_escape_string($_POST['municipioCorrespondencia']);
-    $telefono = $conn->real_escape_string($_POST['telefono']);
-    $email = $conn->real_escape_string($_POST['email']);
-
-    if (
-        empty($primerApellido) || empty($segundoApellido) || empty($nombre) || empty($tipoDocumento) || empty($sexo)
-        || empty($tipoNacionalidad) || empty($paisNacionalidad) || empty($tipoLibretaMilitar) || empty($numeroLibretaMilitar)
-        || empty($dm) || empty($fechaNacimiento) || empty($paisNacimiento) || empty($departamentoNacimiento) || empty($municipioNacimiento)
-        || empty($paisCorrespondencia) || empty($departamentoCorrespondencia) || empty($municipioCorrespondencia) || empty($telefono) || empty($email)
-    ) {
-        echo '<div class="alert alert-warning" role="alert">';
-        echo 'ingrese el numero de documento.';
-        echo '</div>';
-    } else if (empty($numeroDocumento)) {
-        echo '<div class="alert alert-warning" role="alert">';
-        echo 'ingrese el numero de documento.';
-        echo '</div>';
-    } else if (empty($entidad)) {
-        echo '<div class="alert alert-warning" role="alert">';
-        echo 'iingrese la entida a la que va dirigida.';
-        echo '</div>';
-    } else {
-
-        $sql = "INSERT INTO persona 
-                (entidad, primerApellido, segundoApellido, nombre, tipoDocumento, numeroDocumento, sexo, 
-                tipoNacionalidad, paisNacionalidad, tipoLibretaMilitar, numeroLibretaMilitar, dm, fechaNacimiento, 
-                paisNacimiento, departamentoNacimiento, municipioNacimiento, paisCorrespondencia, departamentoCorrespondencia, 
-                municipioCorrespondencia, telefono, email)
-                VALUES 
-                ('$entidad', '$primerApellido', '$segundoApellido', '$nombre', '$tipoDocumento', '$numeroDocumento', 
-                '$sexo', '$tipoNacionalidad', '$paisNacionalidad', '$tipoLibretaMilitar', '$numeroLibretaMilitar', 
-                '$dm', '$fechaNacimiento', '$paisNacimiento', '$departamentoNacimiento', '$municipioNacimiento', 
-                '$paisCorrespondencia', '$departamentoCorrespondencia', '$municipioCorrespondencia', 
-                '$telefono', '$email')";
-
-        if ($conn->query($sql) === TRUE) {
-            // Redirigir a Formacion_Academica.php con los datos
-            header("Location: Formacion_Academica.php?entidad=" . urlencode($entidad) . "&numeroDocumento=" . urlencode($numeroDocumento));
-            exit;
-        } else {
-            echo "Error al guardar los datos: " . $conn->error;
-        }
-    }
-    $conn->close();
-} */
 ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
@@ -126,29 +51,50 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         echo 'Ingrese la entidad a la que va dirigida.';
         echo '</div>';
     } else {
+        // Verificar si ya existe el número de documento
+        $sqlCheckDocumento = "SELECT * FROM persona WHERE numeroDocumento = '$numeroDocumento'";
+        $resultDocumento = $conn->query($sqlCheckDocumento);
 
-        $sql = "INSERT INTO persona 
-                (entidad, primerApellido, segundoApellido, nombre, tipoDocumento, numeroDocumento, sexo, 
-                tipoNacionalidad, paisNacionalidad, tipoLibretaMilitar, numeroLibretaMilitar, dm, fechaNacimiento, 
-                paisNacimiento, departamentoNacimiento, municipioNacimiento, paisCorrespondencia, departamentoCorrespondencia, 
-                municipioCorrespondencia, telefono, email)
-                VALUES 
-                ('$entidad', '$primerApellido', '$segundoApellido', '$nombre', '$tipoDocumento', '$numeroDocumento', 
-                '$sexo', '$tipoNacionalidad', '$paisNacionalidad', '$tipoLibretaMilitar', '$numeroLibretaMilitar', 
-                '$dm', '$fechaNacimiento', '$paisNacimiento', '$departamentoNacimiento', '$municipioNacimiento', 
-                '$paisCorrespondencia', '$departamentoCorrespondencia', '$municipioCorrespondencia', 
-                '$telefono', '$email')";
+        // Verificar si ya existe la entidad
+        $sqlCheckEntidad = "SELECT * FROM persona WHERE entidad = '$entidad'";
+        $resultEntidad = $conn->query($sqlCheckEntidad);
 
-        if ($conn->query($sql) === TRUE) {
-            header("Location: Formacion_Academica.php?entidad=" . urlencode($entidad) . "&numeroDocumento=" . urlencode($numeroDocumento));
-            exit;
+        if ($resultDocumento->num_rows > 0) {
+            echo '<div class="alert alert-danger" role="alert">';
+            echo 'Ya existe un registro con este número de documento.';
+            echo '</div>';
+        } else if ($resultEntidad->num_rows > 0) {
+            echo '<div class="alert alert-danger" role="alert">';
+            echo 'Ya existe un registro con esta entidad.';
+            echo '</div>';
         } else {
-            echo "Error al guardar los datos: " . $conn->error;
+            // Insertar los datos si no existen duplicados
+            $sql = "INSERT INTO persona 
+                    (entidad, primerApellido, segundoApellido, nombre, tipoDocumento, numeroDocumento, sexo, 
+                    tipoNacionalidad, paisNacionalidad, tipoLibretaMilitar, numeroLibretaMilitar, dm, fechaNacimiento, 
+                    paisNacimiento, departamentoNacimiento, municipioNacimiento, paisCorrespondencia, departamentoCorrespondencia, 
+                    municipioCorrespondencia, telefono, email)
+                    VALUES 
+                    ('$entidad', '$primerApellido', '$segundoApellido', '$nombre', '$tipoDocumento', '$numeroDocumento', 
+                    '$sexo', '$tipoNacionalidad', '$paisNacionalidad', '$tipoLibretaMilitar', '$numeroLibretaMilitar', 
+                    '$dm', '$fechaNacimiento', '$paisNacimiento', '$departamentoNacimiento', '$municipioNacimiento', 
+                    '$paisCorrespondencia', '$departamentoCorrespondencia', '$municipioCorrespondencia', 
+                    '$telefono', '$email')";
+
+            if ($conn->query($sql) === TRUE) {
+                header("Location: Formacion_Academica.php?entidad=" . urlencode($entidad) . "&numeroDocumento=" . urlencode($numeroDocumento));
+                exit;
+            } else {
+                echo '<div class="alert alert-danger" role="alert">';
+                echo 'Error al guardar los datos: ' . $conn->error;
+                echo '</div>';
+            }
         }
     }
     $conn->close();
 }
 ?>
+
 <!doctype html>
 <html lang="en">
 
@@ -173,8 +119,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 </div>
                 <div class="col-sm-4">
                     <p align="center">
-                        FORMATO UNICO
-                        hola
+                        FORMATO ÚNICO
                     </p>
                     <h1 align="center">
                         HOJA DE VIDA
@@ -196,7 +141,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 </div>
                 <div class="bannermenu">
                     <a href="index.php" class="menu">Datos Personales</a>
-                    <a href="Formacion_Academica.php" class="menu">Formacion Academica</a>
+                    <a href="Formacion_Academica.php" class="menu">Formación Académica</a>
                     <a href="Experiencia_Laboral.php" class="menu">Experiencia Laboral</a>
                     <a href="Tiempo_Total_De_Experiencia.php" class="menu">Tiempo Total De Experiencia</a>
                     <a href="buscar.php" class="menu">Buscar Registro</a>
