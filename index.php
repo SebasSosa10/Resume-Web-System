@@ -51,11 +51,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         echo 'Ingrese la entidad a la que va dirigida.';
         echo '</div>';
     } else {
-        // Verificar si ya existe el número de documento
+
         $sqlCheckDocumento = "SELECT * FROM persona WHERE numeroDocumento = '$numeroDocumento'";
         $resultDocumento = $conn->query($sqlCheckDocumento);
 
-        // Verificar si ya existe la entidad
         $sqlCheckEntidad = "SELECT * FROM persona WHERE entidad = '$entidad'";
         $resultEntidad = $conn->query($sqlCheckEntidad);
 
@@ -68,7 +67,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             echo 'Ya existe un registro con esta entidad.';
             echo '</div>';
         } else {
-            // Insertar los datos si no existen duplicados
             $sql = "INSERT INTO persona 
                     (entidad, primerApellido, segundoApellido, nombre, tipoDocumento, numeroDocumento, sexo, 
                     tipoNacionalidad, paisNacionalidad, tipoLibretaMilitar, numeroLibretaMilitar, dm, fechaNacimiento, 
@@ -205,7 +203,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                         <div class="form-textnumero">
                             <label for="numeroDocumento" style="margin-right: 10px;">N°</label>
                             <input type="text" class="form-control" id="numeroDocumento" name="numeroDocumento"
-                                style="width: 300px;">
+                                style="width: 300px;" maxlength="16">
                         </div>
                     </div>
                 </div>
@@ -440,6 +438,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             </div>
         </form>
         <Script>
+            const hoy = new Date();
+            const fechaMaxima = new Date(hoy.getFullYear() - 18, hoy.getMonth(), hoy.getDate()).toISOString().split("T")[0];
+            const fechaMinima = new Date(hoy.getFullYear() - 100, hoy.getMonth(), hoy.getDate()).toISOString().split("T")[0];
+            const inputFecha = document.getElementById("fechaNacimiento");
+            inputFecha.setAttribute("max", fechaMaxima);
+            inputFecha.setAttribute("min", fechaMinima);
+
             function validarSoloNumeros(input) {
                 input.value = input.value.replace(/[^0-9]/g, '');
             }

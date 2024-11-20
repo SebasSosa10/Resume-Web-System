@@ -1,16 +1,13 @@
 <?php
 include('conexion.php');
 
-// Obtener parámetros de la URL
 $entidad = $_GET['entidad'] ?? null;
 $numeroDocumento = $_GET['numeroDocumento'] ?? null;
 
-// Variable para almacenar mensajes
 $alertMessage = '';
 
-// Verificar si se ha enviado el formulario
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    // Validar si existen los datos personales
+
     if (!$entidad || !$numeroDocumento) {
         $alertMessage = '<div class="alert alert-warning" role="alert">
             <h4 class="alert-heading">¡Atención!</h4>
@@ -22,7 +19,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             </div>
         </div>';
     } else {
-        // Capturar y validar los datos del formulario
+
         $formData = [
             'tipoEducacion' => $_POST['tipoEducacion'] ?? '',
             'titulo' => $_POST['nombreTitulo'] ?? '',
@@ -41,7 +38,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             'loEscribe' => $_POST['loEscribe'] ?? ''
         ];
 
-        // Verificar campos requeridos
         $requiredFields = [
             'tipoEducacion',
             'titulo',
@@ -231,11 +227,22 @@ if (!empty($alertMessage)) {
                     </div>
                     <div class="form-group mt-3">
                         <label for="fechaIngresoActual">FECHA DE INGRESO:</label>
-                        <input type="date" id="fechaIngresoActual" name="fechaIngresoActual" class="form-control">
+                        <div class="col-sm-1"></div>
+                        <div class="col-sm-3">
+                            <div class="form-group mt-3">
+                                <input type="date" id="fechaIngresoActual" name="fechaIngresoActual"
+                                    class="form-control">
+                            </div>
+                        </div>
                     </div>
                     <div class="form-group mt-3">
                         <label for="fechaRetiroActual">FECHA DE RETIRO:</label>
-                        <input type="date" id="fechaRetiroActual" name="fechaRetiroActual" class="form-control">
+                        <div class="col-sm-1"></div>
+                        <div class="col-sm-3">
+                            <div class="form-group mt-3">
+                                <input type="date" id="fechaRetiroActual" name="fechaRetiroActual" class="form-control">
+                            </div>
+                        </div>
                     </div>
                     <div class="form-group mt-3">
                         <label for="cargo">CARGO O CONTRATO ACTUAL:</label>
@@ -260,6 +267,10 @@ if (!empty($alertMessage)) {
             </div>
         </form>
         <Script>
+        const hoy = new Date().toISOString().split("T")[0];
+        document.getElementById("fechaIngresoActual").setAttribute("max", hoy);
+        document.getElementById("fechaRetiroActual").setAttribute("max", hoy);
+
             function validarSoloNumeros(input) {
                 input.value = input.value.replace(/[^0-9]/g, '');
             }

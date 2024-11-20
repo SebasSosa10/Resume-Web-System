@@ -68,7 +68,7 @@
                         <div class="form-textnumero">
                             <label for="numeroDocumento" style="margin-right: 10px;">N°</label>
                             <input type="text" class="form-control" id="numeroDocumento" name="numeroDocumento"
-                                style="width: 300px;" oninput="validarSoloNumeros(this)">
+                                style="width: 300px;" oninput="validarSoloNumeros(this)" maxlength="16">
                         </div>
                     </div>
                 </div>

@@ -4,11 +4,9 @@ include('conexion.php');
 $entidad = $_GET['entidad'] ?? null;
 $numeroDocumento = $_GET['numeroDocumento'] ?? null;
 
-// Variable para almacenar mensajes de error
 $errorMessage = '';
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    // Capturar los datos del formulario
     $tipoEducacion = $_POST['tipoEducacion'] ?? '';
     $titulo = $_POST['nombreTitulo'] ?? '';
     $mesEducacionBasica = $_POST['mesTitulo'] ?? '';
@@ -25,7 +23,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $loLee = $_POST['loLee'] ?? '';
     $loEscribe = $_POST['loEscribe'] ?? '';
 
-    // Validar si faltan datos personales
     if (!$entidad || !$numeroDocumento) {
         $errorMessage = '<div class="alert alert-warning" role="alert">
             <h4 class="alert-heading">¡Atención!</h4>
@@ -37,7 +34,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             </div>
         </div>';
     }
-    // Validar campos requeridos del formulario
+
     elseif (
         empty($tipoEducacion) || empty($titulo) || empty($anioEducacionBasica) ||
         empty($modalidad) || empty($graduado) || empty($nombreEstudio) ||
@@ -49,7 +46,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             <p>Por favor, complete todos los campos requeridos del formulario.</p>
         </div>';
     } else {
-        // Verificar si ya existe un registro con la misma entidad y número de identificación
+
         $checkSql = "SELECT 1 FROM formacion_academica WHERE idPersona = ? AND entidad = ?";
         if ($stmt = $conn->prepare($checkSql)) {
             $stmt->bind_param("ss", $numeroDocumento, $entidad);
@@ -57,13 +54,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $stmt->store_result();
 
             if ($stmt->num_rows > 0) {
-                // Ya existe un registro
+
                 $errorMessage = '<div class="alert alert-danger" role="alert">
                     <h4 class="alert-heading">Error</h4>
                     <p>Ya existe un registro con este número de identificación y entidad.</p>
                 </div>';
             } else {
-                // Insertar datos en la tabla formacion_academica
+
                 $stmt->close();
 
                 $sql = "INSERT INTO formacion_academica (
@@ -123,7 +120,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
 $conn->close();
 
-// Mostrar el mensaje de error si existe
 if (!empty($errorMessage)) {
     echo $errorMessage;
 }
