@@ -1,16 +1,16 @@
 <?php
 
 //Aleja
-$user = "root";
+/* $user = "root";
 $pass = "12345";
 $host = "localhost";
-$db = "proyectofinal";
+$db = "proyectofinal"; */
 
 //Sosa
-/* $user = "root";
+$user = "root";
 $pass = "123456";
 $host = "localhost";
-$db = "hoja-de-vida"; */
+$db = "hoja-de-vida";
 
 $conn = new mysqli($host, $user, $pass, $db);
 

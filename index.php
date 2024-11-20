@@ -1,5 +1,5 @@
 <?php
-ini_set('display_errors', 1);
+/* ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
 
@@ -33,8 +33,23 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $telefono = $conn->real_escape_string($_POST['telefono']);
     $email = $conn->real_escape_string($_POST['email']);
 
-    if (empty($primerApellido) || empty($nombre) || empty($numeroDocumento) || empty($email)) {
-        echo "<script>alert('Por favor complete todos los campos obligatorios.');</script>";
+    if (
+        empty($primerApellido) || empty($segundoApellido) || empty($nombre) || empty($tipoDocumento) || empty($sexo)
+        || empty($tipoNacionalidad) || empty($paisNacionalidad) || empty($tipoLibretaMilitar) || empty($numeroLibretaMilitar)
+        || empty($dm) || empty($fechaNacimiento) || empty($paisNacimiento) || empty($departamentoNacimiento) || empty($municipioNacimiento)
+        || empty($paisCorrespondencia) || empty($departamentoCorrespondencia) || empty($municipioCorrespondencia) || empty($telefono) || empty($email)
+    ) {
+        echo '<div class="alert alert-warning" role="alert">';
+        echo 'ingrese el numero de documento.';
+        echo '</div>';
+    } else if (empty($numeroDocumento)) {
+        echo '<div class="alert alert-warning" role="alert">';
+        echo 'ingrese el numero de documento.';
+        echo '</div>';
+    } else if (empty($entidad)) {
+        echo '<div class="alert alert-warning" role="alert">';
+        echo 'iingrese la entida a la que va dirigida.';
+        echo '</div>';
     } else {
 
         $sql = "INSERT INTO persona 
@@ -51,6 +66,80 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
         if ($conn->query($sql) === TRUE) {
             // Redirigir a Formacion_Academica.php con los datos
+            header("Location: Formacion_Academica.php?entidad=" . urlencode($entidad) . "&numeroDocumento=" . urlencode($numeroDocumento));
+            exit;
+        } else {
+            echo "Error al guardar los datos: " . $conn->error;
+        }
+    }
+    $conn->close();
+} */
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
+
+include('conexion.php');
+
+if ($conn->connect_error) {
+    die("Error de conexión: " . $conn->connect_error);
+}
+
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+
+    $entidad = isset($_POST['entidad']) ? trim($_POST['entidad']) : null;
+    $primerApellido = isset($_POST['primerApellido']) ? $conn->real_escape_string($_POST['primerApellido']) : null;
+    $segundoApellido = isset($_POST['segundoApellido']) ? $conn->real_escape_string($_POST['segundoApellido']) : null;
+    $nombre = isset($_POST['nombre']) ? $conn->real_escape_string($_POST['nombre']) : null;
+    $tipoDocumento = isset($_POST['tipoDocumento']) ? $conn->real_escape_string($_POST['tipoDocumento']) : null;
+    $numeroDocumento = isset($_POST['numeroDocumento']) ? trim($_POST['numeroDocumento']) : null;
+    $sexo = isset($_POST['sexo']) ? $conn->real_escape_string($_POST['sexo']) : null;
+    $tipoNacionalidad = isset($_POST['tipoNacionalidad']) ? $conn->real_escape_string($_POST['tipoNacionalidad']) : null;
+    $paisNacionalidad = isset($_POST['paisNacionalidad']) ? $conn->real_escape_string($_POST['paisNacionalidad']) : 'Desconocido';
+    $tipoLibretaMilitar = isset($_POST['tipoLibreta']) ? $conn->real_escape_string($_POST['tipoLibreta']) : null;
+    $numeroLibretaMilitar = isset($_POST['numeroLibretaMilitar']) ? $conn->real_escape_string($_POST['numeroLibretaMilitar']) : null;
+    $dm = isset($_POST['dm']) ? $conn->real_escape_string($_POST['dm']) : null;
+    $fechaNacimiento = isset($_POST['fechaNacimiento']) ? $conn->real_escape_string($_POST['fechaNacimiento']) : null;
+    $paisNacimiento = isset($_POST['paisNacimiento']) ? $conn->real_escape_string($_POST['paisNacimiento']) : null;
+    $departamentoNacimiento = isset($_POST['departamentoNacimiento']) ? $conn->real_escape_string($_POST['departamentoNacimiento']) : null;
+    $municipioNacimiento = isset($_POST['municipioNacimiento']) ? $conn->real_escape_string($_POST['municipioNacimiento']) : null;
+    $paisCorrespondencia = isset($_POST['paisCorrespondencia']) ? $conn->real_escape_string($_POST['paisCorrespondencia']) : null;
+    $departamentoCorrespondencia = isset($_POST['departamentoCorrespondencia']) ? $conn->real_escape_string($_POST['departamentoCorrespondencia']) : null;
+    $municipioCorrespondencia = isset($_POST['municipioCorrespondencia']) ? $conn->real_escape_string($_POST['municipioCorrespondencia']) : null;
+    $telefono = isset($_POST['telefono']) ? $conn->real_escape_string($_POST['telefono']) : null;
+    $email = isset($_POST['email']) ? $conn->real_escape_string($_POST['email']) : null;
+
+    if (
+        empty($primerApellido) || empty($segundoApellido) || empty($nombre) || empty($tipoDocumento) || empty($sexo)
+        || empty($tipoNacionalidad) || empty($paisNacionalidad) || empty($tipoLibretaMilitar) || empty($numeroLibretaMilitar)
+        || empty($dm) || empty($fechaNacimiento) || empty($paisNacimiento) || empty($departamentoNacimiento) || empty($municipioNacimiento)
+        || empty($paisCorrespondencia) || empty($departamentoCorrespondencia) || empty($municipioCorrespondencia) || empty($telefono) || empty($email)
+    ) {
+        echo '<div class="alert alert-warning" role="alert">';
+        echo 'Por favor, complete todos los campos requeridos.';
+        echo '</div>';
+    } else if (empty($numeroDocumento)) {
+        echo '<div class="alert alert-warning" role="alert">';
+        echo 'Ingrese el número de documento.';
+        echo '</div>';
+    } else if (empty($entidad)) {
+        echo '<div class="alert alert-warning" role="alert">';
+        echo 'Ingrese la entidad a la que va dirigida.';
+        echo '</div>';
+    } else {
+
+        $sql = "INSERT INTO persona 
+                (entidad, primerApellido, segundoApellido, nombre, tipoDocumento, numeroDocumento, sexo, 
+                tipoNacionalidad, paisNacionalidad, tipoLibretaMilitar, numeroLibretaMilitar, dm, fechaNacimiento, 
+                paisNacimiento, departamentoNacimiento, municipioNacimiento, paisCorrespondencia, departamentoCorrespondencia, 
+                municipioCorrespondencia, telefono, email)
+                VALUES 
+                ('$entidad', '$primerApellido', '$segundoApellido', '$nombre', '$tipoDocumento', '$numeroDocumento', 
+                '$sexo', '$tipoNacionalidad', '$paisNacionalidad', '$tipoLibretaMilitar', '$numeroLibretaMilitar', 
+                '$dm', '$fechaNacimiento', '$paisNacimiento', '$departamentoNacimiento', '$municipioNacimiento', 
+                '$paisCorrespondencia', '$departamentoCorrespondencia', '$municipioCorrespondencia', 
+                '$telefono', '$email')";
+
+        if ($conn->query($sql) === TRUE) {
             header("Location: Formacion_Academica.php?entidad=" . urlencode($entidad) . "&numeroDocumento=" . urlencode($numeroDocumento));
             exit;
         } else {
@@ -110,6 +199,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     <a href="Formacion_Academica.php" class="menu">Formacion Academica</a>
                     <a href="Experiencia_Laboral.php" class="menu">Experiencia Laboral</a>
                     <a href="Tiempo_Total_De_Experiencia.php" class="menu">Tiempo Total De Experiencia</a>
+                    <a href="buscar.php" class="menu">Buscar Registro</a>
                 </div>
             </div>
             <div class="row">
@@ -159,18 +249,18 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                         <label for="tipoDocumento" style="margin-right: 10px;"><strong>DOCUMENTO DE
                                 IDENTIFICACIÓN:</strong></label>
                         <div class="radio-numero">
-                            <input class="form-check-input" type="radio" name="tipoDocumento" id="c.c" value="c.c"
+                            <input class="form-check-input" type="radio" name="tipoDocumento" id="C.C" value="C.C"
                                 checked>
-                            <label class="form-check-label" for="c.c">C.C</label>
-                            <input class="form-check-input" type="radio" name="tipoDocumento" id="c.e" value="c.e">
-                            <label class="form-check-label" for="c.e">C.E</label>
+                            <label class="form-check-label" for="C.C">C.C</label>
+                            <input class="form-check-input" type="radio" name="tipoDocumento" id="C.E" value="C.E">
+                            <label class="form-check-label" for="C.E">C.E</label>
                             <input class="form-check-input" type="radio" name="tipoDocumento" id="pass" value="pass">
                             <label class="form-check-label" for="pass">PASS</label>
                         </div>
                         <div class="form-textnumero">
                             <label for="numeroDocumento" style="margin-right: 10px;">N°</label>
                             <input type="text" class="form-control" id="numeroDocumento" name="numeroDocumento"
-                                style="width: 300px;" oninput="validarSoloNumeros(this)">
+                                style="width: 300px;">
                         </div>
                     </div>
                 </div>
@@ -180,11 +270,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 <div class="col-sm-11">
                     <div class="form">
                         <label for="sexo" style="margin-right: 10px;"><strong>GENERO:</strong></label>
-                        <input class="form-check-input" type="radio" name="sexo" id="m" value="m" checked>
+                        <input class="form-check-input" type="radio" name="sexo" id="Masculino" value="Masculino"
+                            checked>
                         <label class="form-check-label" for="m">MASCULINO</label>
-                        <input class="form-check-input" type="radio" name="sexo" id="f" value="f">
+                        <input class="form-check-input" type="radio" name="sexo" id="Femenino" value="Femenino">
                         <label class="form-check-label" for="f">FEMENINO</label>
-                        <input class="form-check-input" type="radio" name="sexo" id="binario" value="binario">
+                        <input class="form-check-input" type="radio" name="sexo" id="Binario" value="Binario">
                         <label class="form-check-label" for="binario">OTRO</label>
                     </div>
                 </div>
@@ -195,8 +286,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     <div class="form">
                         <label for="nacionalidad" style="margin-right: 10px;"><strong>NACIONALIDAD:</strong></label>
                         <div class="radio">
-                            <input class="form-check-input" type="radio" name="tipoNacionalidad" id="col" value="col"
-                                checked>
+                            <input class="form-check-input" type="radio" name="tipoNacionalidad" id="Colombia"
+                                value="Colombia" checked>
                             <label class="form-check-label" for="col">COL.</label>
                             <input class="form-check-input" type="radio" name="tipoNacionalidad" id="extranjero"
                                 value="extranjero">
@@ -218,11 +309,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     <div class="form">
                         <label for="tipoLibreta" style="margin-right: 10px;"><strong>LIBRETA MILITAR:</strong></label>
                         <div class="radio">
-                            <input class="form-check-input" type="radio" name="tipoLibreta" id="primeraClase"
-                                value="primeraClase" checked>
+                            <input class="form-check-input" type="radio" name="tipoLibreta" id="primera Clase"
+                                value="primera Clase" checked>
                             <label class="form-check-label" for="primeraClase">PRIMERA CLASE</label>
-                            <input class="form-check-input" type="radio" name="tipoLibreta" id="segundaClase"
-                                value="segundaClase">
+                            <input class="form-check-input" type="radio" name="tipoLibreta" id="segunda Clase"
+                                value="segunda Clase">
                             <label class="form-check-label" for="segundaClase">SEGUNDA CLASE</label>
                         </div>
                         <div class="form-textnumero">

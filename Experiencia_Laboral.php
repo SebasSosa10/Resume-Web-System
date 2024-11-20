@@ -90,9 +90,11 @@ $conn->close();
                 <a href="Formacion_Academica.php" class="menu">Formacion Academica</a>
                 <a href="Experiencia_Laboral.php" class="menu">Experiencia Laboral</a>
                 <a href="Tiempo_Total_De_Experiencia.php" class="menu">Tiempo Total De Experiencia</a>
+                <a href="buscar.php" class="menu">Buscar Registro</a>
             </div>
         </div>
-        <form method="post" action="Experiencia_Laboral.php?entidad=<?php echo urlencode($entidad); ?>&numeroDocumento=<?php echo urlencode($numeroDocumento); ?>">
+        <form method="post"
+            action="Experiencia_Laboral.php?entidad=<?php echo urlencode($entidad); ?>&numeroDocumento=<?php echo urlencode($numeroDocumento); ?>">
             <div class="row mt-4">
                 <div class="col-sm-1"></div>
                 <div class="col-sm-11">
@@ -153,7 +155,8 @@ $conn->close();
                     </div>
                     <div class="form-group mt-3">
                         <label for="telefonoEntidadActual">TELÉFONOS:</label>
-                        <input type="tel" class="form-control" id="telefonoEntidadActual" name="telefonoEntidadActual">
+                        <input type="tel" class="form-control" id="telefonoEntidadActual" name="telefonoEntidadActual"
+                            oninput="validarSoloNumeros(this)">
                     </div>
                     <div class="form-group mt-3">
                         <label for="fechaIngresoActual">FECHA DE INGRESO:</label>
@@ -185,6 +188,11 @@ $conn->close();
                 </div>
             </div>
         </form>
+        <Script>
+            function validarSoloNumeros(input) {
+                input.value = input.value.replace(/[^0-9]/g, '');
+            }
+        </Script>
     </div>
 </body>
 

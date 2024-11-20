@@ -121,8 +121,6 @@ $conn->close();
                 <label for="comment">ENTIDAD RECEPTORA:</label>
                 <input type="text" class="form-control" id="entiti" name="entidadReceptora" readonly
                     value="<?php echo htmlspecialchars($entidad); ?>">
-                <input type="text" class="form-control" id="entiti" name="entidadReceptora" readonly
-                    value="<?php echo htmlspecialchars($entidad); ?>">
             </div>
         </div>
         <div class="row">
@@ -130,8 +128,10 @@ $conn->close();
             </div>
             <div class="bannermenu">
                 <a href="index.php" class="menu">Datos Personales</a>
+                <a href="Formacion_Academica.php" class="menu">Formacion Academica</a>
                 <a href="Experiencia_Laboral.php" class="menu">Experiencia Laboral</a>
                 <a href="Tiempo_Total_De_Experiencia.php" class="menu">Tiempo Total De Experiencia</a>
+                <a href="buscar.php" class="menu">Buscar Registro</a>
             </div>
         </div>
         <div class="row">
@@ -196,11 +196,6 @@ $conn->close();
                                 id="tipoEducacion">4</label>
                         <label class="radio-inline"><input type="radio" name="tipoEducacion"
                                 id="tipoEducacion">5</label>
-                        <label class="radio-inline"><input type="radio" name="tipoEducacion" id="tipoEducacion">1</label>
-                        <label class="radio-inline"><input type="radio" name="tipoEducacion" id="tipoEducacion">2</label>
-                        <label class="radio-inline"><input type="radio" name="tipoEducacion" id="tipoEducacion">3</label>
-                        <label class="radio-inline"><input type="radio" name="tipoEducacion" id="tipoEducacion">4</label>
-                        <label class="radio-inline"><input type="radio" name="tipoEducacion" id="tipoEducacion">5</label>
                     </div>
                 </div>
                 <div class="col-sm-3 text-center">
@@ -208,16 +203,12 @@ $conn->close();
                     <div>
                         <label class="radio-inline"><input type="radio" name="tipoEducacion"
                                 id="tipoEducacion">6</label>
-                        <label class="radio-inline"><input type="radio" name="tipoEducacion id="
-                                tipoEducacion"">7</label>
+                        <label class="radio-inline"><input type="radio" name="tipoEducacion"
+                                id="tipoEducacion">7</label>
                         <label class="radio-inline"><input type="radio" name="tipoEducacion"
                                 id="tipoEducacion">8</label>
                         <label class="radio-inline"><input type="radio" name="tipoEducacion"
                                 id="tipoEducacion">9</label>
-                        <label class="radio-inline"><input type="radio" name="tipoEducacion" id="tipoEducacion">6</label>
-                        <label class="radio-inline"><input type="radio" name="tipoEducacion" id="tipoEducacion">7</label>
-                        <label class="radio-inline"><input type="radio" name="tipoEducacion" id="tipoEducacion">8</label>
-                        <label class="radio-inline"><input type="radio" name="tipoEducacion" id="tipoEducacion">9</label>
                     </div>
                 </div>
                 <div class="col-sm-3 text-center">
@@ -397,7 +388,8 @@ $conn->close();
                 <div class="col-sm-11">
                     <div class="form-group">
                         <label for="numeroTarjeta">No. DE TARJETA PROFESIONAL:</label>
-                        <input type="text" class="form-control" id="numeroTarjeta" name="numeroTarjeta">
+                        <input type="text" class="form-control" id="numeroTarjeta" name="numeroTarjeta"
+                            oninput="validarSoloNumeros(this)">
                     </div>
                 </div>
             </div>
@@ -471,6 +463,11 @@ $conn->close();
                 </div>
             </div>
         </form>
+        <Script>
+            function validarSoloNumeros(input) {
+                input.value = input.value.replace(/[^0-9]/g, '');
+            }
+        </Script>
     </div>
 </body>
 
