@@ -160,8 +160,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 totalAnios += anios;
                 totalMeses += meses;
             });
-
-            // Convertir meses excedentes a años
             totalAnios += Math.floor(totalMeses / 12);
             totalMeses = totalMeses % 12;
 

@@ -192,8 +192,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                         <label for="tipoDocumento" style="margin-right: 10px;"><strong>DOCUMENTO DE
                                 IDENTIFICACIÓN:</strong></label>
                         <div class="radio-numero">
-                            <input class="form-check-input" type="radio" name="tipoDocumento" id="C.C" value="C.C"
-                                checked>
+                            <input class="form-check-input" type="radio" name="tipoDocumento" id="C.C" value="C.C">
                             <label class="form-check-label" for="C.C">C.C</label>
                             <input class="form-check-input" type="radio" name="tipoDocumento" id="C.E" value="C.E">
                             <label class="form-check-label" for="C.E">C.E</label>
@@ -213,8 +212,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 <div class="col-sm-11">
                     <div class="form">
                         <label for="sexo" style="margin-right: 10px;"><strong>GENERO:</strong></label>
-                        <input class="form-check-input" type="radio" name="sexo" id="Masculino" value="Masculino"
-                            checked>
+                        <input class="form-check-input" type="radio" name="sexo" id="Masculino" value="Masculino">
                         <label class="form-check-label" for="m">MASCULINO</label>
                         <input class="form-check-input" type="radio" name="sexo" id="Femenino" value="Femenino">
                         <label class="form-check-label" for="f">FEMENINO</label>
@@ -230,7 +228,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                         <label for="nacionalidad" style="margin-right: 10px;"><strong>NACIONALIDAD:</strong></label>
                         <div class="radio">
                             <input class="form-check-input" type="radio" name="tipoNacionalidad" id="Colombia"
-                                value="Colombia" checked>
+                                value="Colombia">
                             <label class="form-check-label" for="col">COL.</label>
                             <input class="form-check-input" type="radio" name="tipoNacionalidad" id="extranjero"
                                 value="extranjero">
@@ -253,7 +251,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                         <label for="tipoLibreta" style="margin-right: 10px;"><strong>LIBRETA MILITAR:</strong></label>
                         <div class="radio">
                             <input class="form-check-input" type="radio" name="tipoLibreta" id="primera Clase"
-                                value="primera Clase" checked>
+                                value="primera Clase">
                             <label class="form-check-label" for="primeraClase">PRIMERA CLASE</label>
                             <input class="form-check-input" type="radio" name="tipoLibreta" id="segunda Clase"
                                 value="segunda Clase">
@@ -438,6 +436,17 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             </div>
         </form>
         <Script>
+            document.querySelectorAll('input[name="tipoNacionalidad"]').forEach(radio => {
+                radio.addEventListener('change', function () {
+                    const paisSelect = document.getElementById('paisNacionalidad');
+                    if (this.value === 'Colombia') {
+                        paisSelect.disabled = true;  // Bloquear select
+                        paisSelect.value = "Seleccione";      // Resetear valor
+                    } else if (this.value === 'extranjero') {
+                        paisSelect.disabled = false; // Desbloquear select
+                    }
+                });
+            });
             const hoy = new Date();
             const fechaMaxima = new Date(hoy.getFullYear() - 18, hoy.getMonth(), hoy.getDate()).toISOString().split("T")[0];
             const fechaMinima = new Date(hoy.getFullYear() - 100, hoy.getMonth(), hoy.getDate()).toISOString().split("T")[0];

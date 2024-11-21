@@ -33,9 +33,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 <a href="index.php" class="btn btn-primary">Ir a Datos Personales</a>
             </div>
         </div>';
-    }
-
-    elseif (
+    } elseif (
         empty($tipoEducacion) || empty($titulo) || empty($anioEducacionBasica) ||
         empty($modalidad) || empty($graduado) || empty($nombreEstudio) ||
         empty($idioma) || empty($loHabla) || empty($loLee) || empty($loEscribe)
@@ -47,9 +45,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         </div>';
     } else {
 
-        $checkSql = "SELECT 1 FROM formacion_academica WHERE idPersona = ? AND entidad = ?";
+        $checkSql = "SELECT 1 FROM formacion_academica WHERE idPersona = ?";
         if ($stmt = $conn->prepare($checkSql)) {
-            $stmt->bind_param("ss", $numeroDocumento, $entidad);
+            $stmt->bind_param("s", $numeroDocumento);
             $stmt->execute();
             $stmt->store_result();
 
@@ -361,6 +359,14 @@ if (!empty($errorMessage)) {
                                     <option value="doctorado">DOC</option>
                                 </select>
                             </div>
+                            <div class="col-xs-4">
+                                <label for="graduado" style="margin-right: 5px;">GRADUADO</label>
+                                <select class="form-control" id="graduado" name="graduado">
+                                    <option value="" disabled selected>Selecciona</option>
+                                    <option value="SI">SI</option>
+                                    <option value="NO">NO</option>
+                                </select>
+                            </div>
                             <div class="col-xs-3">
                                 <label for="semestre" style="margin-right: 5px;">No.SEMESTRES APROBADOS</label>
                                 <select class="form-control" id="semestre" name="semestre">
@@ -375,14 +381,6 @@ if (!empty($errorMessage)) {
                                     <option value="8">8</option>
                                     <option value="9">9</option>
                                     <option value="10">10</option>
-                                </select>
-                            </div>
-                            <div class="col-xs-4">
-                                <label for="graduado" style="margin-right: 5px;">GRADUADO</label>
-                                <select class="form-control" id="graduado" name="graduado">
-                                    <option value="" disabled selected>Selecciona</option>
-                                    <option value="SI">SI</option>
-                                    <option value="NO">NO</option>
                                 </select>
                             </div>
                         </div>
@@ -508,6 +506,17 @@ if (!empty($errorMessage)) {
             </div>
         </form>
         <Script>
+            document.getElementById('graduado').addEventListener('change', function () {
+                const semestreSelect = document.getElementById('semestre');
+                if (this.value === 'SI') {
+                    semestreSelect.disabled = true;         
+                    semestreSelect.value = "";              
+                } else if (this.value === 'NO') {
+                    semestreSelect.disabled = false;        
+                    semestreSelect.value = "";              
+                }
+            });
+
             function validarSoloNumeros(input) {
                 input.value = input.value.replace(/[^0-9]/g, '');
             }

@@ -4,119 +4,90 @@ include('conexion.php');
 $entidad = $_GET['entidad'] ?? null;
 $numeroDocumento = $_GET['numeroDocumento'] ?? null;
 
-$alertMessage = '';
+$errorMessage = '';
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    $empresa = $_POST['empresaActual'] ?? '';
+    $tipo = $_POST['tipoEmpresaActual'] ?? '';
+    $pais = $_POST['paisActual'] ?? '';
+    $departamento = $_POST['departamentoActual'] ?? '';
+    $ciudad = $_POST['capitalActual'] ?? '';
+    $correo = $_POST['correoEntidadActual'] ?? '';
+    $telefono = $_POST['telefonoEntidadActual'] ?? '';
+    $cargo = $_POST['cargo'] ?? '';
+    $dependencia = $_POST['dependenciaActual'] ?? '';
+    $direccion = $_POST['direccionActual'] ?? '';
+    $fechaIngreso = $_POST['fechaIngresoActual'] ?? '';
+    $fechaRetiro = $_POST['fechaRetiroActual'] ?? '';
 
     if (!$entidad || !$numeroDocumento) {
-        $alertMessage = '<div class="alert alert-warning" role="alert">
+        $errorMessage = '<div class="alert alert-warning" role="alert">
             <h4 class="alert-heading">¡Atención!</h4>
-            <p>Antes de continuar, es necesario completar los datos personales.</p>
+            <p>Debe completar los datos personales antes de continuar.</p>
             <hr>
             <p class="mb-0">Por favor, complete primero la sección de datos personales.</p>
             <div class="mt-3">
                 <a href="index.php" class="btn btn-primary">Ir a Datos Personales</a>
             </div>
         </div>';
+    } elseif (
+        empty($empresa) || empty($tipo) || empty($pais) || empty($departamento) ||
+        empty($ciudad) || empty($correo) || empty($telefono) || empty($cargo) ||
+        empty($dependencia) || empty($direccion) || empty($fechaIngreso)
+    ) {
+        $errorMessage = '<div class="alert alert-warning" role="alert">
+            <h4 class="alert-heading">Campos Incompletos</h4>
+            <p>Por favor, complete todos los campos requeridos del formulario.</p>
+        </div>';
     } else {
+        $sql = "INSERT INTO experiencia_laboral (
+                    empresa, tipo, pais, departamento, ciudad, correo, 
+                    telefono, cargo, dependencia, direccion, fechaIngreso, 
+                    fechaRetiro, idPersona
+                ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
-        $formData = [
-            'tipoEducacion' => $_POST['tipoEducacion'] ?? '',
-            'titulo' => $_POST['nombreTitulo'] ?? '',
-            'mesEducacionBasica' => $_POST['mesTitulo'] ?? '',
-            'anioEducacionBasica' => $_POST['anioTitulo'] ?? '',
-            'modalidad' => $_POST['modalidad'] ?? '',
-            'numeroSemestre' => $_POST['semestre'] ?? '',
-            'graduado' => $_POST['graduado'] ?? '',
-            'nombreEstudio' => $_POST['nombreEstudios'] ?? '',
-            'mesEducacionSuperior' => $_POST['mesEstudio'] ?? '',
-            'anioEducacionSuperior' => $_POST['anioEstudio'] ?? '',
-            'tarjetaProfesional' => $_POST['numeroTarjeta'] ?? '',
-            'idioma' => $_POST['idioma'] ?? '',
-            'loHabla' => $_POST['loHabla'] ?? '',
-            'loLee' => $_POST['loLee'] ?? '',
-            'loEscribe' => $_POST['loEscribe'] ?? ''
-        ];
+        if ($stmt = $conn->prepare($sql)) {
+            $stmt->bind_param(
+                "ssssssssssssi",
+                $empresa,
+                $tipo,
+                $pais,
+                $departamento,
+                $ciudad,
+                $correo,
+                $telefono,
+                $cargo,
+                $dependencia,
+                $direccion,
+                $fechaIngreso,
+                $fechaRetiro,
+                $numeroDocumento
+            );
 
-        $requiredFields = [
-            'tipoEducacion',
-            'titulo',
-            'anioEducacionBasica',
-            'modalidad',
-            'graduado',
-            'nombreEstudio',
-            'idioma',
-            'loHabla',
-            'loLee',
-            'loEscribe'
-        ];
-
-        $emptyFields = array_filter($requiredFields, function ($field) use ($formData) {
-            return empty($formData[$field]);
-        });
-
-        if (!empty($emptyFields)) {
-            $alertMessage = '<div class="alert alert-warning" role="alert">
-                <h4 class="alert-heading">Campos Incompletos</h4>
-                <p>Por favor, complete todos los campos requeridos del formulario.</p>
-            </div>';
-        } else {
-            // Preparar y ejecutar la consulta SQL
-            $sql = "INSERT INTO formacion_academica (
-                tipoEducacion, titulo, mesEducacionBasica, anioEducacionBasica, 
-                modalidad, numeroSemestre, graduado, nombreEstudio, 
-                mesEducacionSuperior, anioEducacionSuperior, tarjetaProfesional, 
-                idioma, loHabla, loLee, loEscribe, idPersona
-            ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
-
-            if ($stmt = $conn->prepare($sql)) {
-                $stmt->bind_param(
-                    "ssssssssssssssss",
-                    $formData['tipoEducacion'],
-                    $formData['titulo'],
-                    $formData['mesEducacionBasica'],
-                    $formData['anioEducacionBasica'],
-                    $formData['modalidad'],
-                    $formData['numeroSemestre'],
-                    $formData['graduado'],
-                    $formData['nombreEstudio'],
-                    $formData['mesEducacionSuperior'],
-                    $formData['anioEducacionSuperior'],
-                    $formData['tarjetaProfesional'],
-                    $formData['idioma'],
-                    $formData['loHabla'],
-                    $formData['loLee'],
-                    $formData['loEscribe'],
-                    $numeroDocumento
-                );
-
-                if ($stmt->execute()) {
-                    // Redirigir al siguiente paso
-                    header("Location: Experiencia_Laboral.php?entidad=" . urlencode($entidad) .
-                        "&numeroDocumento=" . urlencode($numeroDocumento));
-                    exit();
-                } else {
-                    $alertMessage = '<div class="alert alert-danger" role="alert">
-                        <h4 class="alert-heading">Error</h4>
-                        <p>Error al guardar los datos: ' . $stmt->error . '</p>
-                    </div>';
-                }
-                $stmt->close();
+            if ($stmt->execute()) {
+                header("Location: Tiempo_Total_De_Experiencia.php?entidad=" . urlencode($entidad) .
+                    "&numeroDocumento=" . urlencode($numeroDocumento));
+                exit();
             } else {
-                $alertMessage = '<div class="alert alert-danger" role="alert">
+                $errorMessage = '<div class="alert alert-danger">
                     <h4 class="alert-heading">Error</h4>
-                    <p>Error en la preparación de la consulta: ' . $conn->error . '</p>
+                    <p>Error al guardar los datos: ' . $stmt->error . '</p>
                 </div>';
             }
+            $stmt->close();
+        } else {
+            $errorMessage = '<div class="alert alert-danger">
+                <h4 class="alert-heading">Error</h4>
+                <p>Error en la preparación de la consulta: ' . $conn->error . '</p>
+            </div>';
         }
     }
 }
 
 $conn->close();
 
-// Mostrar mensaje de alerta si existe
-if (!empty($alertMessage)) {
-    echo $alertMessage;
+if (!empty($errorMessage)) {
+    echo $errorMessage;
 }
 ?>
 <!doctype html>
@@ -181,7 +152,7 @@ if (!empty($alertMessage)) {
                     <label>TIPO DE EMPRESA:</label>
                     <div class="form-check form-check-inline">
                         <input class="form-check-input" type="radio" name="tipoEmpresaActual" id="publica"
-                            value="publica" checked>
+                            value="publica">
                         <label class="form-check-label" for="publica">PÚBLICA</label>
                     </div>
                     <div class="form-check form-check-inline">
@@ -267,9 +238,9 @@ if (!empty($alertMessage)) {
             </div>
         </form>
         <Script>
-        const hoy = new Date().toISOString().split("T")[0];
-        document.getElementById("fechaIngresoActual").setAttribute("max", hoy);
-        document.getElementById("fechaRetiroActual").setAttribute("max", hoy);
+            const hoy = new Date().toISOString().split("T")[0];
+            document.getElementById("fechaIngresoActual").setAttribute("max", hoy);
+            document.getElementById("fechaRetiroActual").setAttribute("max", hoy);
 
             function validarSoloNumeros(input) {
                 input.value = input.value.replace(/[^0-9]/g, '');

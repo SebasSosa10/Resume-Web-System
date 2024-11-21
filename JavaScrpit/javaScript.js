@@ -1,19 +1,5 @@
 let paises = [];
 
-document.addEventListener("DOMContentLoaded", function () {
-    cargaInicial();
-    document.getElementById("col").addEventListener("change", function () {
-        if (this.checked) {
-            document.getElementById("paisNacionalidad").disabled = true;
-        }
-    });
-    document.getElementById("extranjero").addEventListener("change", function () {
-        if (this.checked) {
-            document.getElementById("paisNacionalidad").disabled = false;
-        }
-    });
-});
-
 function cargaInicial() {
     const url = "https://restcountries.com/v3.1/all";
     fetch(url)
