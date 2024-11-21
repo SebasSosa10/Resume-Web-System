@@ -25,13 +25,14 @@ jobs:
         uses: actions/checkout@v4
       - name: Setup Pages
         uses: actions/configure-pages@v5
+      - name: Create _site directory
+        run: mkdir _site
       - name: Copy index.php
-        run: |
-          cp index.php ./_site/
+        run: cp index.php _site/
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: ./_site
+          path: _site
   # Deployment job
   deploy:
     environment:
