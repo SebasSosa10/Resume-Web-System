@@ -182,18 +182,18 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             calcularExperienciaTotal();
         }
 
-        document.addEventListener('DOMContentLoaded', function () {
+        document.addEventListener('DOMContentLoaded', function() {
             const camposAnios = document.querySelectorAll('input[type="number"]:not([max="11"])');
             const camposMeses = document.querySelectorAll('input[type="number"][max="11"]');
 
             camposAnios.forEach(campo => {
-                campo.addEventListener('input', function () {
+                campo.addEventListener('input', function() {
                     validarAnios(this);
                 });
             });
 
             camposMeses.forEach(campo => {
-                campo.addEventListener('input', function () {
+                campo.addEventListener('input', function() {
                     validarMeses(this);
                 });
             });
@@ -218,7 +218,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             <div class="col-sm-3">
                 <label for="comment">ENTIDAD RECEPTORA:</label>
                 <input type="text" class="form-control" id="entiti" name="entidadReceptora" readonly
-                    value="<?php echo htmlspecialchars($entidad); ?>">
+                value="<?php echo htmlspecialchars($entidad ?? '', ENT_QUOTES, 'UTF-8'); ?>">
+
             </div>
         </div>
         <div class="row">

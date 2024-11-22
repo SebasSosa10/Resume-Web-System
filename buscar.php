@@ -127,7 +127,7 @@
                     echo '    <div class="col-sm-11">';
                     echo '        <div class="card">';
                     echo '            <div class="card-header">';
-                    echo '                <h4>Datos Personal</h4>';
+                    echo '                <h4>Datos Personales</h4>';
                     echo '            </div>';
                     while ($persona = $resultado_persona->fetch_assoc()) {
                         echo '            <div class="card-body">';
