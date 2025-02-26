@@ -1,62 +1,62 @@
-# Resume - Web System  
+# **Sistema Web de Currículum**  
 
-This project involves the development of a web application designed to manage and organize users' personal and professional information, focusing on the creation and maintenance of resumes (CVs). The platform allows users to register, view, edit, and update relevant information about their work experience, academic background, skills, and other key data that form part of a professional resume.  
+Este proyecto consiste en el desarrollo de una aplicación web diseñada para gestionar y organizar la información personal y profesional de los usuarios, con un enfoque en la creación y mantenimiento de currículums (CVs). La plataforma permite a los usuarios registrarse, visualizar, editar y actualizar información relevante sobre su experiencia laboral, formación académica, habilidades y otros datos clave que conforman un currículum profesional.  
 
-The application is intended both for professionals who seek a space to manage their work and academic history and for those who want to create a detailed and complete profile to present to potential employers. Additionally, it offers a simple and user-friendly interface, enabling users to easily access the different modules to update their information or view their resume at any time.  
-
----
-
-## Resume Data Management  
-
-- **Work Experience:** Registration and visualization of previous jobs.  
-- **Academic Background:** Management of obtained degrees and certifications.  
-- **Total Experience Calculation:** Automated summary of the accumulated experience.  
+La aplicación está dirigida tanto a profesionales que buscan un espacio para gestionar su historial laboral y académico, como a quienes desean crear un perfil detallado y completo para presentar a posibles empleadores. Además, ofrece una interfaz sencilla y fácil de usar, permitiendo a los usuarios acceder fácilmente a los distintos módulos para actualizar su información o visualizar su currículum en cualquier momento.  
 
 ---
 
-## User Interface  
+## **Gestión de Datos del Currículum**  
 
-- **Simple and functional design:** Includes custom styles.  
-- **Intuitive navigation:** Facilitates access to the modules.  
-
----
-
-## Database Integration  
-
-- **MySQL configuration:** Stores and retrieves information.  
-- **Included SQL scripts:** Used to initialize and populate the database.  
+- **Experiencia Laboral:** Registro y visualización de empleos anteriores.  
+- **Formación Académica:** Gestión de títulos y certificaciones obtenidas.  
+- **Cálculo de Experiencia Total:** Resumen automatizado de la experiencia acumulada.  
 
 ---
 
-## Search and Filters  
+## **Interfaz de Usuario**  
 
-- **Search engine:** Quickly find specific information.  
-
----
-
-## Security  
-
-- **Secure database connection.**  
-- **Protection of personal data:** Achieved through best practices in code implementation.  
+- **Diseño simple y funcional:** Incluye estilos personalizados.  
+- **Navegación intuitiva:** Facilita el acceso a los módulos.  
 
 ---
 
-## Functional Requirements  
+## **Integración con Base de Datos**  
 
-### 1. Data Management  
-- **Work Experience:** Create, edit, and delete information about previous jobs.  
-- **Academic Background:** Register formal education and certifications obtained.  
-- **Total Experience:** Automatically calculate and display accumulated work experience.  
-
-### 2. Security  
-- **Input Validation:** Protects against SQL injection and other common vulnerabilities.  
-- **Protected Access:** Only authenticated users can modify information.  
+- **Configuración de MySQL:** Almacena y recupera información.  
+- **Scripts SQL incluidos:** Para inicializar y poblar la base de datos.  
 
 ---
 
-## Technologies Used  
+## **Búsqueda y Filtros**  
 
-- **PHP:** For backend development.  
-- **MySQL:** Relational database for storing information.  
-- **CSS:** Customization of interface design.  
-- **JavaScript:** Interactive functionalities on the frontend.  
+- **Motor de búsqueda:** Encuentra rápidamente información específica.  
+
+---
+
+## **Seguridad**  
+
+- **Conexión segura a la base de datos.**  
+- **Protección de datos personales:** Mediante buenas prácticas en la implementación del código.  
+
+---
+
+## **Requisitos Funcionales**  
+
+### 1. Gestión de Datos  
+- **Experiencia Laboral:** Crear, editar y eliminar información sobre empleos anteriores.  
+- **Formación Académica:** Registrar educación formal y certificaciones obtenidas.  
+- **Experiencia Total:** Calcular y mostrar automáticamente la experiencia laboral acumulada.  
+
+### 2. Seguridad  
+- **Validación de Entradas:** Protección contra inyecciones SQL y otras vulnerabilidades comunes.  
+- **Acceso Protegido:** Solo los usuarios autenticados pueden modificar la información.  
+
+---
+
+## **Tecnologías Utilizadas**  
+
+- **PHP:** Para el desarrollo del backend.  
+- **MySQL:** Base de datos relacional para almacenar información.  
+- **CSS:** Personalización del diseño de la interfaz.  
+- **JavaScript:** Funcionalidades interactivas en el frontend.
